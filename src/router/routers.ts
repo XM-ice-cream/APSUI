@@ -9,7 +9,7 @@ const Routers: RouteRecordRaw[] = [
     path: "/:pathMatch(.*)*",
     name: "404",
     component: () =>
-      import(/* chunkName: 404 */ "@/components/NotFound/NotFound.vue"),
+      import(/* chunkName: 404 */ "@/components/not-found/NotFound.vue"),
   },
   {
     path: "/login",
@@ -27,13 +27,13 @@ const Routers: RouteRecordRaw[] = [
         name: "Index",
         redirect: "/home",
         component: () =>
-          import(/* chunkName: Index */ "@/components/ParentView/ParentView.vue"),
+          import(/* chunkName: Index */ "@/components/parent-view/ParentView.vue"),
         children: [
           {
             path: "/home",
             name: "Home",
             component: () =>
-              import(/* chunkName: Home */ "@/views/Home/Home.vue"),
+              import(/* chunkName: Home */ "@/views/home/Home.vue"),
           }
         ],
       },      

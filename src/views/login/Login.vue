@@ -49,7 +49,7 @@ import { useRouter } from "vue-router";
 import { rules } from "./baseData";
 import { userLoginApi ,getUserListApi} from "@/apis/user";
 import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entityType/user"
-import useLoging from "@/hooks/useLoging";
+import useLoging from "@/libs/hooks/useLoging";
 
 export default defineComponent({
   name: "Login",

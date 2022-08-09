@@ -22,10 +22,18 @@ div {
 html,
 body {
     height: 100%;
-    background-color: #f0f2f5;   
+    background-color: #f9f9f9;   
 }
 
 a{
     text-decoration: none;
     color: black;
+}
+
+.fr{
+    float: right;
+}
+/* 表格上面 操作按钮 */
+.operator {
+        margin-bottom: 10px
 }

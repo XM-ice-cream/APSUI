@@ -4,7 +4,13 @@
       :background-color="`${store.dark ? '#1d1e1fbd' : '#7b41f2'}`" @select="selectMenu"
       :class="`el-menu-vertical-demo ${store.collapse && 'hideIcon'}`" style="height: 100vh" text-color="#ffffffa6">
       <div class="logo">
-        <el-avatar :size="35" :src="Logo" />
+        <span class="menu-collapse" @click="changeCollapse">
+        <el-icon>
+          <Fold v-if="!store.collapse" />
+          <Expand v-else />
+        </el-icon>
+      </span>
+        <!-- <el-avatar :size="35" :src="Logo" /> -->
         <span v-if="!store.collapse">&nbsp;APS</span>
       </div>
       <el-menu-item index="/index/home">
@@ -36,7 +42,7 @@
 import { useRouter } from "vue-router";
 import MenuItem from "../MenuItem/MenuItem.vue";
 import { defineComponent, computed, ref } from "vue";
-import { useUserStore } from "@/store/userStore";
+import { useUserStore } from "@/libs/store/userStore";
 export default defineComponent({
   name: "SideBar",
   components: {
@@ -50,12 +56,16 @@ export default defineComponent({
     const selectMenu = (index: string) => {
       activatedStyle.value = index;
     };
+     const changeCollapse = () => {
+      store.collapse = !store.collapse;
+    };
     return {
       store,
       current: computed(() => router.currentRoute.value.path),
       selectMenu,
       activatedStyle,
       Logo,
+      changeCollapse,
     };
   },
 });
@@ -73,7 +83,6 @@ export default defineComponent({
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
-  background: #7b41f2!important;
   border-radius: 0 0.4rem 0.4rem 0 !important;
 }
 
@@ -94,12 +103,24 @@ export default defineComponent({
   padding: 10px 4px 10px 5px;
 
   span {
-    margin-left: 10px;
+    font-size: 18px;
+    margin-left: 12px;
     font-weight: 700;
     line-height: normal;
-    color: rgb(229, 229, 229);
+    color: #fff;
     transition: all 0.5s ease;
   }
+   .menu-collapse {
+        padding-left: 8px;
+        font-size: 20px;
+        color: #fffcfc;
+        cursor: pointer;       
+        
+    }
+
+    .menu-collapse:hover {
+        background-color: #d7d7d748;
+    }
 }
 
 .avatar-logo {

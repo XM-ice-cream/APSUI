@@ -29,7 +29,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/libs/store/userStore'
 export default defineComponent({
   name: "MenuItem",
   props: {

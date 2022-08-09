@@ -11,9 +11,9 @@
 }
 
 .avtive-router {
-    background-color: #0960bd !important;
+    background-color: #7b40f4 !important;
     color: #fff !important;
-    border: 1px solid #0960bd !important;
+    border: 1px solid #8158cc !important;
 }
 
 :deep(.el-switch.is-checked .el-switch__core) {
@@ -37,17 +37,6 @@
         height: 45px;
         line-height: 45px;
         align-items: center;
-
-        .menu-collapse {
-            height: 45px;
-            padding: 0 5px;
-            color: #4a4949;
-            cursor: pointer;
-        }
-
-        .menu-collapse:hover {
-            background-color: #d7d7d748;
-        }
 
         .to-scroll-left {
             cursor: pointer;
@@ -99,7 +88,7 @@
                 height: 28px;
                 cursor: pointer;
                 user-select: none;
-                border: 1px solid #d9d9d9;
+                border: none;
                 color: black;
                 background-color: white;
                 border-radius: 0%;

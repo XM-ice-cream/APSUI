@@ -14,6 +14,7 @@ export default defineComponent({
 
 <style scoped>
 .box-card {
-  margin-bottom: 4px;
+    border: none;
+    margin-bottom: 0.1rem;
 }
 </style>

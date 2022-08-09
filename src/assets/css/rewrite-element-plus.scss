@@ -1,0 +1,21 @@
+@import "element-plus/theme-chalk/src/index";
+
+:root {
+    --el-color-primary: #7c40f1;
+    --el-color-primary-light-3: #9469e9;
+    --el-color-primary-light-7: #9469e9;
+    --el-color-primary-light-9: #f9f7ff;
+    --el-border-color: #7c40f1;
+    --el-button-hover-border-color: #7c40f1;
+    --el-color-primary-dark-2: #580bed;
+    --el-menu-bg-color: #7c40f1;
+    --el-color-danger: #fd9162;
+}
+
+.el-message {
+    --el-message-min-width: 3rem;
+}
+
+.el-message__icon {
+    font-size: 0.32rem;
+}

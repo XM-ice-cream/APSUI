@@ -4,10 +4,10 @@ import {
   RouteRecordRaw,
 } from "vue-router";
 import routes from "./routers";
-import { generateRouter } from "../utils/index";
+import { generateRouter } from "@/libs/utils";
 import Routers from "./generator-routers";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { useUserStore } from '../store/userStore'
+import { useLocalStorage } from "@/libs/hooks/useLocalStorage";
+import { useUserStore } from '@/libs/store/userStore'
 
 
 enum ELOGINSTATE {

@@ -1,5 +1,6 @@
 import { RouteRecordRaw } from "vue-router";
 import { ITreeMenuItem } from "@/entitytype/menu";
+import moment from 'moment'
 
 const modules = import.meta.glob("../views/**/**.vue");
 
@@ -107,6 +108,16 @@ export function flatter(target: any) {
     return target
   }
 };
+
+//表格 时间格式化
+export function dateFormat(row:any, column:any) {
+    console.log('1', row, column)
+    const date = row[column.property]
+    if (date === undefined) {
+      return ''
+    }
+    return moment(date).utc().format('YYYY-MM-DD HH:mm:ss')
+  };
 
 
 

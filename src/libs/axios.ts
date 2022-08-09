@@ -2,7 +2,7 @@ import querystring from 'querystring'
 import axios, { AxiosResponse, AxiosRequestConfig, AxiosInstance } from "axios";
 import { ElMessage } from "element-plus";
 import router from "@/router/index";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useLocalStorage } from "@/libs/hooks/useLocalStorage";
 import { IConfigType,IStatusType } from "@/entitytype/http"
 
 const { getLocalStorage } = useLocalStorage();

@@ -23,7 +23,7 @@ import { defineComponent } from "vue";
 import Header from "./components/Header/Header.vue";
 import SideBar from "./components/SideBar/SideBar.vue";
 import Content from "./components/Content/Content.vue";
-import { useUserStore } from "../store/userStore";
+import { useUserStore } from "@/libs/store/userStore";
 
 export default {
   name: "Layout",
@@ -50,6 +50,7 @@ export default {
 
 .el-main {
   padding: 0 6px;
+  margin: 0 0.2rem;
 }
 
 .test {

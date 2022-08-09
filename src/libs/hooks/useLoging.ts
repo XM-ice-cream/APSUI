@@ -1,9 +1,9 @@
 import { ElMessage } from "element-plus";
 import { ref } from "vue";
 import {  IUserLoginReq ,IGetUserListItem} from "@/entitytype/user";
-import {sha1_to_base64,encryptDes} from "../libs/des"
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useSessionStorage } from "@/hooks/useSessionStorage";
+import {sha1_to_base64,encryptDes} from "../des"
+import { useLocalStorage } from "@/libs/hooks/useLocalStorage";
+import { useSessionStorage } from "@/libs/hooks/useSessionStorage";
 
 const useLoging = () => {
     const isLoging = ref<boolean>(false);

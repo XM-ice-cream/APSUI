@@ -1,5 +1,5 @@
 //基础信息 维护
-import Fetch from "@/http/axios";
+import Fetch from "@/libs/axios";
 import {IBaseInfoQuery,UpdateBaseInfo,DeleteBaseInfo} from "@/entitytype/maintenance/baseInfo"
 import {IRes} from "@/entitytype/common"
 

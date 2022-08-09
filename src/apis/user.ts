@@ -1,4 +1,4 @@
-import Fetch from "@/http/axios";
+import Fetch from "@/libs/axios";
 import { ITreeMenuItem } from "@/entitytype/menu";
 import {IUserLoginReq,IUserLoginRes,IGetUserListItem} from "@/entitytype/user"
 

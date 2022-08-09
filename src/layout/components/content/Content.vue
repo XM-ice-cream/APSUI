@@ -1,5 +1,5 @@
 <template>
-  <div class="content" :style="`background-color:${store.dark ? '#1d1e1f' : '#fff'}`">
+  <div class="content" :style="`background-color:${store.dark ? '#1d1e1f' : 'transparent'}`">
     <router-view v-slot="{ Component }">
       <component :is="Component" />
     </router-view>
@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useUserStore } from '@/store/userStore'
+import { useUserStore } from '@/libs/store/userStore'
 
 export default defineComponent({
   name: "Content",

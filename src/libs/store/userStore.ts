@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { getUserMenu } from '../apis/user';
-import {  INavItem, ITreeMenuItem } from '../entitytype/menu';
-import { flatter, getTreeMenus } from '../utils/index'
+import { getUserMenu } from '@/apis/user';
+import {  INavItem, ITreeMenuItem } from '@/entitytype/menu';
+import { flatter, getTreeMenus } from '@/libs/utils'
 
 export const useUserStore = defineStore('user', {
     state: () => {

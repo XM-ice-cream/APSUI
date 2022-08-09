@@ -1,12 +1,7 @@
 <template>
   <header class="m-header" :style="divDarkStyle()">
-    <div class="content" :style="`border-bottom: 1px solid ${store.dark ? '#4c4d4f' : '#d9d9d9'}`">
-      <span class="menu-collapse" @click="changeCollapse">
-        <el-icon>
-          <Fold v-if="!store.collapse" />
-          <Expand v-else />
-        </el-icon>
-      </span>
+    <div class="content" >
+      
       <span @click="scrollToX('left')" class="to-scroll-left">
         <el-icon>
           <ArrowLeft />
@@ -66,7 +61,7 @@
 import { useRouter } from "vue-router";
 import { VueDraggableNext } from "vue-draggable-next";
 import { defineComponent, computed } from "vue";
-import { useUserStore } from "../../../store/userStore";
+import { useUserStore } from "@/libs/store/userStore";
 import { fullScreenIcon, circleUrl } from "./base-data";
 
 
@@ -115,9 +110,7 @@ export default defineComponent({
       }
     };
 
-    const changeCollapse = () => {
-      store.collapse = !store.collapse;
-    };
+   
 
     const collapseSwitchChange = () => {
       return `width: calc(100% - ${!store.collapse ? '200' : '60'}px);`
@@ -128,7 +121,7 @@ export default defineComponent({
     }
 
     const divDarkStyle = () => {
-      return `transition: all .3s ease-in-out;width: calc(100% - ${!store.collapse ? '200' : '60'}px);background-color:${store.dark ? '#1d1e1f' : '#fff'}`
+      return `transition: all .3s ease-in-out;width: calc(100% - ${!store.collapse ? '200' : '60'}px);background-color:${store.dark ? '#1d1e1f' : '#f9f9f9'}`
     }
 
     const scrollToX = (direction: string) => {
@@ -157,8 +150,7 @@ export default defineComponent({
       current: computed(() => router.currentRoute.value.path),
       handleCommand,
       routerPush,
-      closeNav,
-      changeCollapse,
+      closeNav,      
       toggleFullScreen,
       scrollToX,
       handleConfigNav,

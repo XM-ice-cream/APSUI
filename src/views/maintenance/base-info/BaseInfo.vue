@@ -1,7 +1,6 @@
 <template>
   <div class="base-info-box">
-    <Card>
-      <el-form :inline="true" :model="req" class="form-inline" size="small">
+      <el-form :inline="true" :model="req" class="form-inline" label-width="50px">
         <el-form-item label="机种">
           <el-input v-model="req.modelId" placeholder="请输入机种" />
         </el-form-item>
@@ -13,18 +12,21 @@
           <el-button @click="onSubmit">重置</el-button>
         </el-form-item>
       </el-form>
-    </Card>
     <Card>
-      <el-button type="primary" style="margin-bottom: 10px" @click="onSubmit" size="small"
-        >+ 添加</el-button
-      >
+     <div class="operator fr">
+         <el-button type="primary" @click="onSubmit"> + 添加</el-button>
+     </div>
       <el-table :data="data" fixed="right"  :height="tableConfig.height">
+       <el-table-column type="index" label="#" :index="indexMethod" />
         <el-table-column
           v-for="(item, index) in Column"
           :prop="item.key"
+          :key="index"
           :label="item.title"
           :width="item.width"
-          :key="index"
+          :align="item?.align"
+          :show-overflow-tooltip="item?.tooltip"
+          :formatter="(item.formatter&&item.formatter==='dateFormat')?dateFormat:null"  
         />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
@@ -58,8 +60,9 @@ import Card from "@/components/Card/Card.vue";
 import {  reactive,toRefs,defineComponent,onMounted} from "vue";
 import { Column } from "./baseData";
 import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
-import { IBaseInfoQuery } from "@/entitytype/maintenance/baseInfo"
-import { getPageListReq } from "@/apis/maintenance/baseInfo"
+import { IBaseInfoQuery } from "@/entitytype/maintenance/baseInfo";
+import { getPageListReq } from "@/apis/maintenance/baseInfo";
+import { dateFormat } from "@/libs/utils"
 export default defineComponent({
   name: "baseInfo",
   components: {
@@ -68,8 +71,9 @@ export default defineComponent({
   },
   setup() {
      const dataMap = reactive({
+        dateFormat:dateFormat,
         tableConfig:{
-            height:document.body.clientHeight - 280
+            height:document.body.clientHeight - 230
         },
         req:{
             modelId: "",
@@ -110,7 +114,11 @@ export default defineComponent({
 
     const handleDelete = (index: number, row: any) => {};
 
-     const onSubmit = () => {};
+    const onSubmit = () => {};
+     //表格 index
+    const indexMethod =  (index: number) =>{
+        return  (dataMap.req.pageIndex - 1) * dataMap.req.pageSize + index + 1;
+    }
 
      // 选择第几页
    const pageChange=(index:number)=> {
@@ -127,7 +135,7 @@ export default defineComponent({
     };
       // 自动改变表格高度
    const autoSize =()=> {
-      dataMap.tableConfig.height = document.body.clientHeight - 280;
+      dataMap.tableConfig.height = document.body.clientHeight - 230;
       console.log( dataMap.tableConfig.height);
     };
 
@@ -143,6 +151,7 @@ export default defineComponent({
       onSubmit,
       handleEdit,
       handleDelete,
+      indexMethod,
       pageChange,
       pageSizeChange
     };
