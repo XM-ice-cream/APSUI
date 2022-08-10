@@ -1,20 +1,20 @@
 <template>
   <div class="base-info-box">
-      <el-form :inline="true" :model="req" class="form-inline" label-width="50px">
-        <el-form-item label="机种">
+      <el-form  class="form-inline" label-width="50px" ref="reqRef" :inline="true" :model="req">
+        <el-form-item label="机种" prop="modelId">
           <el-input v-model="req.modelId" placeholder="请输入机种" />
         </el-form-item>
-        <el-form-item label="工单">
+        <el-form-item label="工单" prop="workOrder">
           <el-input v-model="req.workOrder" placeholder="请输入工单" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="pageLoad">搜索</el-button>
-          <el-button @click="onSubmit">重置</el-button>
+          <el-button @click="resetClick(reqRef)">重置</el-button>
         </el-form-item>
       </el-form>
     <Card>
      <div class="operator fr">
-         <el-button type="primary" @click="onSubmit"> + 添加</el-button>
+         <el-button type="primary" @click="updateBase(updateBaseRef,{})"> + 添加</el-button>
      </div>
       <el-table :data="data" fixed="right"  :height="tableConfig.height">
        <el-table-column type="index" label="#" :index="indexMethod" />
@@ -30,13 +30,13 @@
         />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
-            <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+            <el-button size="small" @click="updateBase(updateBaseRef,scope.row)"
               >编辑</el-button
             >
             <el-button
               size="small"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="handleDelete(scope.row)"
               >删除</el-button
             >
           </template>
@@ -52,26 +52,39 @@
         @handleCurrentChange="pageChange"
         @handleSizeChange="pageSizeChange"/>
     </Card>
+    <UpdateBase ref="updateBaseRef" @reLoad="pageLoad"/>
   </div>
 </template>
 
 <script lang="ts">
-import Card from "@/components/Card/Card.vue";
-import {  reactive,toRefs,defineComponent,onMounted} from "vue";
+//vue 内置
+import { ElMessage } from "element-plus";
+import {  reactive,toRefs,defineComponent,onMounted } from "vue";
+// 参数
 import { Column } from "./baseData";
-import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
-import { IBaseInfoQuery } from "@/entitytype/maintenance/baseInfo";
-import { getPageListReq } from "@/apis/maintenance/baseInfo";
 import { dateFormat } from "@/libs/utils"
+//自定义组件
+import Card from "@/components/Card/Card.vue";
+import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
+import UpdateBase from "./UpdateBase.vue";
+//entity
+import { IBaseInfoQuery,BaseInfo } from "@/entitytype/maintenance/baseInfo";
+//api
+import { getPageListReq ,deteteReq } from "@/apis/maintenance/baseInfo";
+
+
 export default defineComponent({
   name: "baseInfo",
   components: {
     Card,
-    PaginationCustom
-  },
-  setup() {
+    PaginationCustom,
+    UpdateBase
+},
+  setup(props,cxt) {
      const dataMap = reactive({
         dateFormat:dateFormat,
+        reqRef:null,
+        updateBaseRef:null,
         tableConfig:{
             height:document.body.clientHeight - 230
         },
@@ -89,7 +102,6 @@ export default defineComponent({
    
     // 查询
     const pageLoad= ()=>{
-        console.log("查询");
         const {modelId,workOrder} = dataMap.req;
         const obj:IBaseInfoQuery = {
                 orderField:"workOrder", // 排序字段
@@ -110,11 +122,27 @@ export default defineComponent({
         })
     }
 
-    const handleEdit = (index: number, row: any) => {};
+    //删除
+    const handleDelete = (row: BaseInfo) => {       
+       deteteReq({id:row.id}).then(res=>{
+            if(res.code===200){
+                ElMessage.success("删除成功");
+                pageLoad();
+            }else{
+                ElMessage.error(`删除失败,${res.message}`);
+            }
+       })
+    };
+    //新增
+    const updateBase = (ref:any,row: BaseInfo) => {        
+        ref.dialogVisible = true;
+        ref.dialogTitle="新增";
+        if(JSON.stringify(row)!=="{}"){
+            ref.submitReq={...row};
+            ref.dialogTitle="编辑"
+        }
+    };
 
-    const handleDelete = (index: number, row: any) => {};
-
-    const onSubmit = () => {};
      //表格 index
     const indexMethod =  (index: number) =>{
         return  (dataMap.req.pageIndex - 1) * dataMap.req.pageSize + index + 1;
@@ -122,25 +150,28 @@ export default defineComponent({
 
      // 选择第几页
    const pageChange=(index:number)=> {
-    console.log("选中第几页",index);
-    //   this.req.pageIndex = index;
-    //   this.pageLoad();
+         dataMap.req.pageIndex = index;
+         pageLoad();
     };
     // 选择一页有条数据
    const pageSizeChange=(index:number)=> {
-      console.log("选择一页有条数据",index);
-    //   this.req.pageIndex = 1;
-    //   this.req.pageSize = index;
-    //   this.pageLoad();
+        dataMap.req.pageIndex = 1;
+        dataMap.req.pageSize = index;
+        pageLoad();
     };
       // 自动改变表格高度
    const autoSize =()=> {
       dataMap.tableConfig.height = document.body.clientHeight - 230;
-      console.log( dataMap.tableConfig.height);
+    };
+    //重置
+    const resetClick = (formRef:any) => {
+        if (!formRef) return;
+        formRef.resetFields();
     };
 
-    onMounted(() => { 
+    onMounted(() => {        
         pageLoad();
+        autoSize();
         window.addEventListener("resize", () => autoSize()); 
     }) ;
 
@@ -148,12 +179,13 @@ export default defineComponent({
       ...toRefs(dataMap),
       Column,
       pageLoad,
-      onSubmit,
-      handleEdit,
+      updateBase,
       handleDelete,
-      indexMethod,
+      indexMethod,     
       pageChange,
-      pageSizeChange
+      pageSizeChange,
+      autoSize,
+      resetClick,
     };
   },
 });

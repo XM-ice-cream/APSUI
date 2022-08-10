@@ -25,6 +25,7 @@ import {IRes} from "@/entitytype/common"
  */
  export const addReq = (data: UpdateBaseInfo) => {
     return Fetch({
+        baseUrl:"http://10.32.44.91:8080",
         url: '/api/apscenter/anonymous/v1/baseinfo/addbaseinfo',
         method: 'post',
         data
@@ -33,10 +34,11 @@ import {IRes} from "@/entitytype/common"
 /**
  * @description 更新
  * @param data 
- * @type DeleteBaseInfo
+ * @type UpdateBaseInfo
  */
- export const updateReq = (data: DeleteBaseInfo) => {
+ export const updateReq = (data: UpdateBaseInfo) => {
     return Fetch({
+        baseUrl:"http://10.32.44.91:8080",
         url: '/api/apscenter/anonymous/v1/baseinfo/modifybaseinfo',
         method: 'put',
         data
@@ -46,10 +48,11 @@ import {IRes} from "@/entitytype/common"
 /**
  * @description 删除
  * @param data 
- * @type UpdateBaseInfo
+ * @type DeleteBaseInfo
  */
- export const deteteReq = (data: UpdateBaseInfo) => {
-    return Fetch<IRes>({
+ export const deteteReq = (data:DeleteBaseInfo ) => {
+    return Fetch({
+        baseUrl:"http://10.32.44.91:8080",
         url: '/api/apscenter/anonymous/v1/baseinfo/deletebaseinfo',
         method: 'delete',
         data

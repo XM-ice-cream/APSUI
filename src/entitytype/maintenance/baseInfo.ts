@@ -17,7 +17,8 @@ export type UpdateBaseInfo = {
     uph:number,
     workDayId:string,
     seq:number,
-    priority:number
+    priority:number,
+    id?:string
 }
 // 删除
 export type DeleteBaseInfo = {   
@@ -32,17 +33,17 @@ interface baseInfoRes extends IPagination {
     data:Array<BaseInfo>
 }
 
-type BaseInfo = {     
-    id:string, 
-    modelId:string,
-    workOrder:string,
-    processLineId:string,
-    uph:number,
-    workDayId:string,
-    seq:number,
-    priority:number,
-    createDate:string,
-    createUserName:string
+export type BaseInfo = {     
+    id?:string, 
+    modelId?:string,
+    workOrder?:string,
+    processLineId?:string,
+    uph?:number,
+    workDayId?:string,
+    seq?:number,
+    priority?:number,
+    createDate?:string,
+    createUserName?:string
 }
 
 
