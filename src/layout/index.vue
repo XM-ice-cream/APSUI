@@ -1,3 +1,13 @@
+<script setup lang="ts" name="Layout">
+import Header from "./components/Header/Header.vue";
+import SideBar from "./components/SideBar/SideBar.vue";
+import Content from "./components/Content/Content.vue";
+import { useUserStore } from "@/libs/store/userStore";
+
+const store = useUserStore();
+
+</script>
+
 <template>
   <div :class="store.dark && 'common-layout'" style="transition: background-color .4s ease;">
     <el-scrollbar height="100vh">
@@ -18,36 +28,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import Header from "./components/Header/Header.vue";
-import SideBar from "./components/SideBar/SideBar.vue";
-import Content from "./components/Content/Content.vue";
-import { useUserStore } from "@/libs/store/userStore";
-
-export default {
-  name: "Layout",
-  components: {
-    Header,
-    SideBar,
-    Content,
-  },
-  setup() {
-    const store = useUserStore();
-    return {
-      store,
-    };
-  },
-};
-</script>
-
 <style lang="scss" scoped>
 .common-layout {
   background-color: #1d1e1f;
 }
-
-
-
 .el-main {
   padding: 0 6px;
   margin: 0 0.2rem;

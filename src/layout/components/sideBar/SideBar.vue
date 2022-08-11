@@ -1,3 +1,25 @@
+<!-- 侧边栏 -->
+<script setup lang="ts" name="SideBar">
+import { useRouter } from "vue-router";
+import MenuItem from "../MenuItem/MenuItem.vue";
+import { computed, ref } from "vue";
+import { useUserStore } from "@/libs/store/userStore";
+
+const store = useUserStore();
+const router = useRouter();
+const current= computed (() => { 
+    return router.currentRoute.value.path
+}) 
+const activatedStyle = ref<string>(router.currentRoute.value.path);
+const Logo: string = "https://q1.qlogo.cn/g?b=qq&nk=1942847253&s=100";
+const selectMenu = (index: string) => {
+    activatedStyle.value = index;
+};
+const changeCollapse = () => {
+    store.collapse = !store.collapse;
+};
+</script>
+
 <template>
   <div class="side-bar">
     <el-menu router :collapse="store.collapse" :default-active="current" active-text-color="#fff"
@@ -37,39 +59,6 @@
     </el-menu>
   </div>
 </template>
-
-<script lang="ts">
-import { useRouter } from "vue-router";
-import MenuItem from "../MenuItem/MenuItem.vue";
-import { defineComponent, computed, ref } from "vue";
-import { useUserStore } from "@/libs/store/userStore";
-export default defineComponent({
-  name: "SideBar",
-  components: {
-    MenuItem,
-  },
-  setup() {
-    const store = useUserStore();
-    const router = useRouter();
-    const activatedStyle = ref<string>(router.currentRoute.value.path);
-    const Logo: string = "https://q1.qlogo.cn/g?b=qq&nk=1942847253&s=100";
-    const selectMenu = (index: string) => {
-      activatedStyle.value = index;
-    };
-     const changeCollapse = () => {
-      store.collapse = !store.collapse;
-    };
-    return {
-      store,
-      current: computed(() => router.currentRoute.value.path),
-      selectMenu,
-      activatedStyle,
-      Logo,
-      changeCollapse,
-    };
-  },
-});
-</script>
 
 <style scoped lang="scss">
 .side-bar {

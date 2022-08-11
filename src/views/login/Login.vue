@@ -1,3 +1,40 @@
+<script setup lang="ts" name="Login">
+import { Ref, ref } from "vue";
+import { useRouter } from "vue-router";
+import { rules } from "./baseData";
+import { userLoginApi ,getUserListApi} from "@/apis/user";
+import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entityType/user"
+import useLoging from "@/libs/hooks/useLoging";
+//两个非常常用的响应式 API：reactive 和 ref
+
+/*  ref:
+* ref 用于创建基础类型的响应式，也可以创建引用类型的响应式
+接受一个内部值并返回一个响应式且可变的 ref 对象。ref 对象仅有一个 .value property，指向该内部值
+        const data = ref(xxx) 
+引用方式： const dataValue = data.value
+*/
+
+/**reactive:
+ * 返回对象的响应式副本，响应式转换是“深层”的——它影响所有嵌套 property
+ */
+const ruleFormRef = ref(); //ref 约等于 reactive({ value: x })
+const router = useRouter();
+const ruleForm:Ref<IUserLoginReq> = ref<IUserLoginReq>({////返回对象的响应式副本
+    username: "",
+    password: "",
+});
+
+const { isLoging, setLoging } = useLoging();
+
+const submitForm = async () => {
+ruleFormRef.value.validate(async (valid: boolean) => {
+    valid &&
+    await setLoging<IUserLoginReq,IGetUserListItem,IUserLoginRes>(userLoginApi,getUserListApi,ruleForm.value)
+    router.replace("/");
+});
+};
+</script>
+
 <template>
   <div class="login-content" id="login-content">
     <el-card class="box-card">
@@ -43,57 +80,6 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
-import { rules } from "./baseData";
-import { userLoginApi ,getUserListApi} from "@/apis/user";
-import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entityType/user"
-import useLoging from "@/libs/hooks/useLoging";
-
-export default defineComponent({
-  name: "Login",
-  components: {},
-  setup() {
-    //两个非常常用的响应式 API：reactive 和 ref
-
-    /*  ref:
-    * ref 用于创建基础类型的响应式，也可以创建引用类型的响应式
-    接受一个内部值并返回一个响应式且可变的 ref 对象。ref 对象仅有一个 .value property，指向该内部值
-               const data = ref(xxx) 
-    引用方式： const dataValue = data.value
-    */
-
-    /**reactive:
-     * 返回对象的响应式副本，响应式转换是“深层”的——它影响所有嵌套 property
-     */
-    const ruleFormRef = ref(); //ref 约等于 reactive({ value: x })
-    const router = useRouter();
-    const ruleForm:IUserLoginReq = reactive<IUserLoginReq>({////返回对象的响应式副本
-      username: "",
-      password: "",
-    });
-
-    const { isLoging, setLoging } = useLoging();
-
-    const submitForm = async () => {
-      ruleFormRef.value.validate(async (valid: boolean) => {
-        valid &&
-        await setLoging<IUserLoginReq,IGetUserListItem,IUserLoginRes>(userLoginApi,getUserListApi,ruleForm)
-        router.replace("/");
-      });
-    };
-
-    return {
-      rules,
-      ruleFormRef,
-      ruleForm,
-      isLoging,
-      submitForm,
-    };
-  },
-});
-</script>
 <style>
  #login-content .el-input--large .el-input__wrapper {
     padding: 0.09rem 0.2rem;  
@@ -107,6 +93,7 @@ export default defineComponent({
     color: #59289b;
 }
 </style>
+
 <style lang="scss" scoped>
 
 .title {

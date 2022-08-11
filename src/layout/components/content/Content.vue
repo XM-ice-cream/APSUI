@@ -1,3 +1,9 @@
+<!-- 内容 -->
+<script setup lang="ts" name="Content">
+import { useUserStore } from '@/libs/store/userStore'
+const store = useUserStore();
+</script>
+
 <template>
   <div class="content" :style="`background-color:${store.dark ? '#1d1e1f' : 'transparent'}`">
     <router-view v-slot="{ Component }">
@@ -5,22 +11,6 @@
     </router-view>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import { useUserStore } from '@/libs/store/userStore'
-
-export default defineComponent({
-  name: "Content",
-  setup() {
-    const store = useUserStore();
-
-    return {
-      store
-    }
-  },
-});
-</script>
 
 <style scoped lang="scss">
 </style>

@@ -1,3 +1,16 @@
+<!-- 404 -->
+<script setup lang="ts" name="404">
+import { computed  } from "vue";
+import { useRouter } from "vue-router";
+
+ const message = computed(()=>{
+   return "无法进入此页面...";
+ }) 
+const router = useRouter();
+const routeBack = () => {
+    router.push("/index");
+};
+</script>
 <template>
   <div class="wscn-http404-container">
     <div class="wscn-http404">
@@ -35,32 +48,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import { useRouter } from "vue-router";
-
-export default defineComponent({
-  name: "404",
-  computed: {
-    message() {
-      return "无法进入此页面...";
-    },
-  },
-
-  setup() {
-    const router = useRouter();
-    const routeBack = () => {
-      router.push("/index");
-    };
-
-    return {
-      routeBack,
-    };
-  },
-});
-</script>
-
 <style lang="scss" scoped>
 @import "./index.scss";
 </style>

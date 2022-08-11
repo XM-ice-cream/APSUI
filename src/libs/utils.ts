@@ -111,7 +111,6 @@ export function flatter(target: any) {
 
 //表格 时间格式化
 export function dateFormat(row:any, column:any) {
-    console.log('1', row, column)
     const date = row[column.property]
     if (date === undefined) {
       return ''

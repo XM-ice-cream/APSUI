@@ -1,7 +1,89 @@
+
+<!-- 头部 -->
+<script setup lang="ts" name="Header">
+import { useRouter } from "vue-router";
+import { VueDraggableNext } from "vue-draggable-next";
+import { computed } from "vue";
+import { useUserStore } from "@/libs/store/userStore";
+import { fullScreenIcon, circleUrl } from "./base-data";
+
+const router = useRouter();
+const store = useUserStore();  
+const current= computed (() => { 
+   return router.currentRoute.value.path
+}) 
+
+const handleCommand = () => {
+    localStorage.clear();
+    router.go(0);
+};
+const routerPush = (path: string) => {
+    router.push(path);
+};
+
+const closeNav = (path: string) => {
+    const currentPath = router.currentRoute.value.fullPath;
+    store.navList.forEach((item, index) => {
+    if (path === item.path) {
+        if (currentPath === item.path) {
+        const isLast = index === store.navList.length - 1;
+        isLast
+            ? router.push(store.navList[index - 1].path)
+            : router.push(store.navList[index + 1].path);
+        }
+        store.closeNav(index);
+    }
+    });
+};
+
+const handleConfigNav = (command: string) => {
+    switch (command) {
+    case "close-current":
+        closeNav(router.currentRoute.value.fullPath);
+        break;
+    case "close-other":
+        store.cloneOtherNav(router.currentRoute.value.fullPath);
+        break;
+    }
+};
+
+
+
+const collapseSwitchChange = () => {
+    return `width: calc(100% - ${!store.collapse ? '200' : '60'}px);`
+}
+
+const darkSwitchChange = () => {
+    store.darkSwitch();
+}
+
+const divDarkStyle = () => {
+    return `transition: all .3s ease-in-out;width: calc(100% - ${!store.collapse ? '200' : '60'}px);background-color:${store.dark ? '#1d1e1f' : '#f9f9f9'}`
+}
+
+const scrollToX = (direction: string) => {
+    const scrollBox = document.getElementById("scroll-Box")!;
+    if (direction === "right") {
+    scrollBox.scrollLeft = scrollBox.scrollLeft + scrollBox.offsetWidth;
+    } else {
+    scrollBox.scrollLeft = scrollBox.scrollLeft - scrollBox.offsetWidth;
+    }
+};
+
+const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+    } else {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
+    }
+};
+</script>
+
 <template>
   <header class="m-header" :style="divDarkStyle()">
-    <div class="content" >
-      
+    <div class="content" >      
       <span @click="scrollToX('left')" class="to-scroll-left">
         <el-icon>
           <ArrowLeft />
@@ -57,110 +139,7 @@
   </header>
 </template>
 
-<script lang="ts">
-import { useRouter } from "vue-router";
-import { VueDraggableNext } from "vue-draggable-next";
-import { defineComponent, computed } from "vue";
-import { useUserStore } from "@/libs/store/userStore";
-import { fullScreenIcon, circleUrl } from "./base-data";
 
-
-
-export default defineComponent({
-  name: "Header",
-  components: {
-    VueDraggableNext,
-  },
-  setup() {
-    const router = useRouter();
-    const store = useUserStore();
-
-    const handleCommand = () => {
-      localStorage.clear();
-      router.go(0);
-    };
-
-    const routerPush = (path: string) => {
-      router.push(path);
-    };
-
-    const closeNav = (path: string) => {
-      const currentPath = router.currentRoute.value.fullPath;
-      store.navList.forEach((item, index) => {
-        if (path === item.path) {
-          if (currentPath === item.path) {
-            const isLast = index === store.navList.length - 1;
-            isLast
-              ? router.push(store.navList[index - 1].path)
-              : router.push(store.navList[index + 1].path);
-          }
-          store.closeNav(index);
-        }
-      });
-    };
-
-    const handleConfigNav = (command: string) => {
-      switch (command) {
-        case "close-current":
-          closeNav(router.currentRoute.value.fullPath);
-          break;
-        case "close-other":
-          store.cloneOtherNav(router.currentRoute.value.fullPath);
-          break;
-      }
-    };
-
-   
-
-    const collapseSwitchChange = () => {
-      return `width: calc(100% - ${!store.collapse ? '200' : '60'}px);`
-    }
-
-    const darkSwitchChange = () => {
-      store.darkSwitch();
-    }
-
-    const divDarkStyle = () => {
-      return `transition: all .3s ease-in-out;width: calc(100% - ${!store.collapse ? '200' : '60'}px);background-color:${store.dark ? '#1d1e1f' : '#f9f9f9'}`
-    }
-
-    const scrollToX = (direction: string) => {
-      const scrollBox = document.getElementById("scroll-Box")!;
-      if (direction === "right") {
-        scrollBox.scrollLeft = scrollBox.scrollLeft + scrollBox.offsetWidth;
-      } else {
-        scrollBox.scrollLeft = scrollBox.scrollLeft - scrollBox.offsetWidth;
-      }
-    };
-
-    const toggleFullScreen = () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        if (document.exitFullscreen) {
-          document.exitFullscreen();
-        }
-      }
-    };
-
-    return {
-      store,
-      circleUrl,
-      fullScreenIcon,
-      current: computed(() => router.currentRoute.value.path),
-      handleCommand,
-      routerPush,
-      closeNav,      
-      toggleFullScreen,
-      scrollToX,
-      handleConfigNav,
-      darkSwitchChange,
-      collapseSwitchChange,
-      divDarkStyle,
-    };
-  },
-});
-</script>
 
 <style lang="scss" scoped>
 @import "./index.scss";

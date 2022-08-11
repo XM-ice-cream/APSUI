@@ -4,17 +4,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from "vue";
-export default defineComponent({
-  name: "Home",
-  components: {},
-  setup() {
+<script setup lang="ts" name="home">
+import { onMounted } from "vue";
 
-    onMounted(() => {        
-    });
-    
-  },
+onMounted(() => {        
 });
 </script>
 

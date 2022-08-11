@@ -1,3 +1,30 @@
+<!-- 子菜单 -->
+<script setup lang="ts" name="MenuItem">
+import { toRefs } from "vue"
+import { useUserStore } from '@/libs/store/userStore'
+const props =  defineProps({
+    index: {
+        type: String,
+        default: "",
+    },
+    item: {
+        type: Object,
+        default: {},
+    },
+    collapse: {
+        type: Boolean,
+        default:false,
+    },
+})
+const {index,item,collapse} = toRefs(props) //具有响应式 指针指向props下面对应的属性值
+
+const store = useUserStore();
+
+const getItemMenuStyle = () => {
+    return store.dark && 'background-color:#282829'
+}
+</script>
+
 <template>
   <el-sub-menu v-if="item.children && item.children.length >= 1" :index="index + Date.now()">
     <template #title>
@@ -27,37 +54,7 @@
     <template #title>{{ item.title }}</template>
   </el-menu-item>
 </template>
-<script lang="ts">
-import { defineComponent } from "vue";
-import { useUserStore } from '@/libs/store/userStore'
-export default defineComponent({
-  name: "MenuItem",
-  props: {
-    index: {
-      type: String,
-      default: "",
-    },
-    item: {
-      type: Object,
-      default: {},
-    },
-    collapse: {
-      type: Boolean,
-    },
-  },
-  setup() {
-    const store = useUserStore();
 
-    const getItemMenuStyle = () => {
-      return store.dark && 'background-color:#282829'
-    }
-    return {
-      store,
-      getItemMenuStyle
-    }
-  },
-});
-</script>
 
 <style lang="scss" scoped>
 .el-menu-item.is-active {
@@ -66,7 +63,6 @@ export default defineComponent({
     margin: 0 auto;
     border-radius: 0.4rem;
 }
-.el-menu-item {}
 
 :deep(.el-menu--inline) {
   background-color: #000c17;
