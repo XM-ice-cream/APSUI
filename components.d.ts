@@ -37,6 +37,7 @@ declare module '@vue/runtime-core' {
     ParentView: typeof import('./src/components/parent-view/ParentView.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UpdateData: typeof import('./src/components/change-base-info/UpdateData.vue')['default']
     ViewData: typeof import('./src/components/change-base-info/ViewData.vue')['default']
   }
 }

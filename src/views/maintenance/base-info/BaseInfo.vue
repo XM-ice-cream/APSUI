@@ -1,162 +1,117 @@
 <script lang="ts" setup name="BaseInfo">
-    //vue 内置
-    import { ElMessage } from "element-plus";
-    import { Ref,ref,onMounted } from "vue";
-    // 参数
-    import { Column,SearchForm,UpdateForm } from "./baseData";
-    import { dateFormat } from "@/libs/utils"
-    //自定义组件
-    import Card from "@/components/Card/Card.vue";
-    import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
-    import UpdateBase from "./UpdateBase.vue";
-    //entity
-    import { IBaseInfoQuery,BaseInfo } from "@/entitytype/maintenance/baseInfo";
-    //api
-    import { getPageListReq ,deteteReq } from "@/apis/maintenance/baseInfo";
-  
-    const reqRef = ref(null); 
-    const updateBaseRef = ref(null);
-    const selectObj = ref({});//选中值
-    let tableData = ref([]);//表格值
-    const tableConfig = ref({
-            height:document.body.clientHeight - 230
-        })//表格设定
-    const req: Ref<any>  = ref({
-            modelId: "",
-            workOrder: "",
-            pageSize:30, 
-            pageIndex:1, 
-            total:0,
-            totalPage:0,
-            elapsedMilliseconds:0,
-        })//表单参数
-   
-   // 查询
-    const pageLoad = ()=>{
-        const { modelId,workOrder} = req.value;
-        const obj:IBaseInfoQuery = {
-                orderField:"workOrder", // 排序字段
-                ascending: true, // 是否升序
-                pageSize: 30, // 分页大小
-                pageIndex:1, // 当前页码
-                data: { 
-                    modelId,
-                    workOrder
-                },
-        };
-        getPageListReq(obj).then(res=>{
-            if(res.code===200){
-                let { data, pageSize, pageIndex, total, totalPage } = res.result;
-                tableData.value = data || [];
-                console.log(tableData);
-                req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
-            }
-        })
-    }
-    //删除
-    const  handleDelete=(row: BaseInfo)=> {  
-        // 提供空字符串作为回退值：Undefined不能赋值给类型string  
-        deteteReq({id:row?.id??''}).then(res=>{
-            if(res.code===200){
-                ElMessage.success("删除成功");
-                pageLoad();
-            }else{
-                ElMessage.error(`删除失败,${res.message}`);
-            }
-        })
-    }
-    //新增
-    const  updateBase = (row: BaseInfo)=> {  
-        console.log(((updateBaseRef.value as any).dialogVisible));  
-        (updateBaseRef.value as any).dialogVisible = true;
-        selectObj.value = {...row};
-    }
+//vue 内置
+import { ElMessage } from "element-plus";
+import { Ref,ref,onMounted } from "vue";
 
-    //表格 index
-    const indexMethod = (index: number)=>{
-        return  (req.value.pageIndex - 1) * req.value.pageSize + index + 1;
-    }
+// 参数
+import { Column,SearchForm,UpdateForm } from "./baseData";
+// 自定义组件
+import ViewData from "@/components/change-base-info/ViewData.vue";
+import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
-    // 选择第几页
-    const pageChange =(index:number)=> {
-        req.value.pageIndex = index;
-        pageLoad();
-    }
-    // 选择一页有条数据
-    const pageSizeChange =(index:number) => {
-        req.value.pageIndex = 1;
-        req.value.pageSize = index;
-        pageLoad();
-    }
-    // 自动改变表格高度
-    const autoSize = () => {
-        tableConfig.value.height = document.body.clientHeight - 230;
-    }
-    //重置
-    const resetClick = () => {
-        (reqRef.value as any).resetFields();
-    }    
+//entity
+import { IBaseInfoQuery,BaseInfo,UpdateBaseInfo } from "@/entitytype/maintenance/baseInfo";
+//api
+import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/baseInfo";
 
-    onMounted(() => {        
-        pageLoad();
-        autoSize();
-        addEventListener("resize", () => autoSize()); 
-    }) ;
+const updateDataRef = ref();
+const dialogVisible = ref(false);
+const selectObj = ref({});//选中值
+const tableData = ref([]);//表格值
+const submitReq:Ref<any> = ref({
+    modelId: "",//机种ID
+    workOrder: "",//工单
+    processLineId:"",//制程段Id
+    uph:0,//最大产能
+    workDayId:"",//工作排程时间ID
+    seq:0,//排序（第一段、第二段、第三段）
+    priority:9,//优先级 数字越小 级别越高
+    id:"",
+})
+const req: Ref<any>  = ref({
+        modelId: "",
+        workOrder: "",
+        pageSize:30, 
+        pageIndex:1, 
+        total:0,
+        totalPage:0,
+        elapsedMilliseconds:0,
+})//表单参数
+
+
+// 查询
+const pageLoad = ()=>{
+    const { modelId,workOrder} = req.value;
+    const obj:IBaseInfoQuery = {
+            orderField:"workOrder", // 排序字段
+            ascending: true, // 是否升序
+            pageSize: 30, // 分页大小
+            pageIndex:1, // 当前页码
+            data: { 
+                modelId,
+                workOrder
+            },
+    };
+    getPageListReq(obj).then(res=>{
+        if(res.code===200){
+            let { data, pageSize, pageIndex, total, totalPage } = res.result;
+            tableData.value = data || [];
+            console.log(tableData);
+            req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
+        }
+    })
+}
+//新增、编辑
+const sumbit =(row :UpdateBaseInfo)=>{
+    const { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id } = row;
+    const obj = { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id };
+    const requestApi = obj.id?updateReq:addReq;
+    requestApi(obj).then(res=>{
+        if(res.code==200){
+            ElMessage.success(`${res.message}`);
+            pageLoad();
+            updateDataRef.value.handleClose();//关闭弹框
+        }else{
+            ElMessage.error(`提交失败,${res.message}`);
+        }
+    })
+}
+
+//删除
+const  handleDelete=(row: BaseInfo)=> {  
+    // 提供空字符串作为回退值：Undefined不能赋值给类型string  
+    deteteReq({id:row?.id??''}).then(res=>{
+        if(res.code===200){
+            ElMessage.success("删除成功");
+            pageLoad();
+        }else{
+            ElMessage.error(`删除失败,${res.message}`);
+        }
+    })
+}
+//弹框
+const  updateBase = (row: BaseInfo)=> {  
+    dialogVisible.value= true;
+    selectObj.value = {...row};
+    updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});
+}
+onMounted(() => {        
+    pageLoad();
+}) ;
 </script>
 <template>
   <div class="base-info-box">
-      <el-form  class="form-inline" label-width="50px" ref="reqRef" :inline="true" :model="req">
-       <template v-for="(item,key) in SearchForm">
-        <el-form-item :label="item.label" :prop="item.prop">
-            <el-input v-model="req[item.prop]" :placeholder="item.pleaseholder" />
-        </el-form-item>
-       </template>
-        <el-form-item>
-          <el-button type="primary" @click="pageLoad">搜索</el-button>
-          <el-button @click="resetClick()">重置</el-button>
-        </el-form-item>
-      </el-form>
-    <Card>
-     <div class="operator fr">
-         <el-button type="primary" @click="updateBase({})"> + 添加</el-button>
-     </div>
-      <el-table :data="tableData" fixed="right"  :height="tableConfig.height">
-       <el-table-column type="index" label="#" :index="indexMethod" />
-        <el-table-column
-          v-for="(item, index) in Column"
-          :prop="item.key"
-          :key="index"
-          :label="item.title"
-          :width="item.width"
-          :align="item?.align"
-          :show-overflow-tooltip="item?.tooltip"
-          :formatter="(item.formatter&&item.formatter==='dateFormat')?dateFormat:null"  
+    <ViewData 
+        ref="viewDataRef" 
+        :Column="Column"
+        :SearchForm="SearchForm" 
+        :req="req" 
+        :tableData="tableData" 
+        @pageLoad="pageLoad" 
+        @handleDelete="handleDelete" 
+        @updateBase="updateBase"
         />
-        <el-table-column label="操作" width="150" fixed="right">
-          <template #default="scope">
-            <el-button size="small" @click="updateBase(scope.row)"
-              >编辑</el-button
-            >
-            <el-button
-              size="small"
-              type="danger"
-              @click="handleDelete(scope.row)"
-              >删除</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
-      <!-- 分页 -->
-      <PaginationCustom 
-        :total="req.total"
-        :totalPage="req.totalPage"
-        :pageIndex="req.pageIndex"
-        :pageSize="req.pageSize"
-        :elapsedMilliseconds="req.elapsedMilliseconds"  
-        @handleCurrentChange="pageChange"
-        @handleSizeChange="pageSizeChange"/>
-    </Card>
-    <UpdateBase ref="updateBaseRef" :data="selectObj" :UpdateForm="UpdateForm"  @reLoad="pageLoad"/>
+     <UpdateData ref="updateDataRef" :UpdateForm="UpdateForm" :selectObj = "selectObj" v-model:dialogVisible="dialogVisible" :submitReq ="submitReq" @reLoad="sumbit"/>
   </div>
 </template>
 

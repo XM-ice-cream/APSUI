@@ -1,75 +1,52 @@
 <script lang="ts" setup name="BaseInfo">
     //vue 内置
-    import { ElMessage } from "element-plus";
-    import { Ref,ref,onMounted } from "vue";
+    import { Ref,ref,onMounted,toRefs,PropType } from "vue";
     // 参数
-    import { Column,SearchForm,UpdateForm } from "./baseData";
     import { dateFormat } from "@/libs/utils"
     //自定义组件
     import Card from "@/components/Card/Card.vue";
     import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
-    import UpdateBase from "./UpdateBase.vue";
     //entity
-    import { IBaseInfoQuery,BaseInfo } from "@/entitytype/maintenance/baseInfo";
-    //api
-    import { getPageListReq ,deteteReq } from "@/apis/maintenance/baseInfo";
+    import { BaseInfo } from "@/entitytype/maintenance/baseInfo";
+    import { IFormBase,ITableBase } from "@/entitytype/common";
+
+    const props = defineProps({
+        Column:{
+             type:Array as PropType<ITableBase[]>,
+            default:()=>[]
+        },
+        SearchForm:{
+            type:Array as PropType<IFormBase[]>,
+            default:()=>[]
+        },
+        req:{
+             type:Object,
+            default:()=>{}
+        },
+        tableData:{
+            type:Array,
+            default:()=>[]
+        }
+    })
+    const {Column, SearchForm,req,tableData } =toRefs(props) ;
   
     const reqRef = ref(null); 
-    const updateBaseRef = ref(null);
-    const selectObj = ref({});//选中值
-    let tableData = ref([]);//表格值
     const tableConfig = ref({
             height:document.body.clientHeight - 230
-        })//表格设定
-    const req: Ref<any>  = ref({
-            modelId: "",
-            workOrder: "",
-            pageSize:30, 
-            pageIndex:1, 
-            total:0,
-            totalPage:0,
-            elapsedMilliseconds:0,
-        })//表单参数
-   
+    })//表格设定
+   const emit = defineEmits(["update:req","pageLoad","handleDelete","updateBase"]);
    // 查询
     const pageLoad = ()=>{
-        const { modelId,workOrder} = req.value;
-        const obj:IBaseInfoQuery = {
-                orderField:"workOrder", // 排序字段
-                ascending: true, // 是否升序
-                pageSize: 30, // 分页大小
-                pageIndex:1, // 当前页码
-                data: { 
-                    modelId,
-                    workOrder
-                },
-        };
-        getPageListReq(obj).then(res=>{
-            if(res.code===200){
-                let { data, pageSize, pageIndex, total, totalPage } = res.result;
-                tableData.value = data || [];
-                console.log(tableData);
-                req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
-            }
-        })
+       emit("update:req",req.value)
+       emit("pageLoad");
     }
     //删除
     const  handleDelete=(row: BaseInfo)=> {  
-        // 提供空字符串作为回退值：Undefined不能赋值给类型string  
-        deteteReq({id:row?.id??''}).then(res=>{
-            if(res.code===200){
-                ElMessage.success("删除成功");
-                pageLoad();
-            }else{
-                ElMessage.error(`删除失败,${res.message}`);
-            }
-        })
+       emit("handleDelete",row);
     }
     //新增
     const  updateBase = (row: BaseInfo)=> {  
-        console.log(((updateBaseRef.value as any).dialogVisible));  
-        (updateBaseRef.value as any).dialogVisible = true;
-        selectObj.value = {...row};
+       emit("updateBase",row);
     }
 
     //表格 index
@@ -156,7 +133,6 @@
         @handleCurrentChange="pageChange"
         @handleSizeChange="pageSizeChange"/>
     </Card>
-    <UpdateBase ref="updateBaseRef" :data="selectObj" :UpdateForm="UpdateForm"  @reLoad="pageLoad"/>
   </div>
 </template>
 

@@ -18,9 +18,19 @@ export interface IRes {
 	result: any
 }
 // 基础增删改查
-export interface IUpdateBase {
+export interface IFormBase {
 	label: string
 	prop: string
 	pleaseholder: string
 	type: string
+}
+
+export interface ITableBase {
+	key: string
+	title: string
+	align: string
+	tooltip: Boolean
+	width?: string
+	minWidth?: string
+	formatter?: string
 }
