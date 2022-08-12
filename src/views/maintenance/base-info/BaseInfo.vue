@@ -10,7 +10,7 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { IBaseInfoQuery,BaseInfo,UpdateBaseInfo } from "@/entitytype/maintenance/baseInfo";
+import { IBaseInfoQuery,IUpdateBaseInfo } from "@/entity/maintenance/baseInfo";
 //api
 import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/baseInfo";
 
@@ -62,7 +62,7 @@ const pageLoad = ()=>{
     })
 }
 //新增、编辑
-const sumbit =(row :UpdateBaseInfo)=>{
+const sumbit =(row :IUpdateBaseInfo)=>{
     const { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id } = row;
     const obj = { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id };
     const requestApi = obj.id?updateReq:addReq;
@@ -78,7 +78,7 @@ const sumbit =(row :UpdateBaseInfo)=>{
 }
 
 //删除
-const  handleDelete=(row: BaseInfo)=> {  
+const  handleDelete=(row: IUpdateBaseInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
     deteteReq({id:row?.id??''}).then(res=>{
         if(res.code===200){
@@ -90,7 +90,7 @@ const  handleDelete=(row: BaseInfo)=> {
     })
 }
 //弹框
-const  updateBase = (row: BaseInfo)=> {  
+const  updateBase = (row: IUpdateBaseInfo)=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});

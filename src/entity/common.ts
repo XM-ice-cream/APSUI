@@ -8,6 +8,12 @@ export interface IPagination {
 	data: any //查询条件
 }
 
+export interface IBaseEntity {
+	id?: string
+	createDate?: string
+	createUserName?: string
+}
+
 //API 返回结果
 export interface IRes {
 	code: number

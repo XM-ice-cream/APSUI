@@ -3,7 +3,7 @@
 //vue 内置
 import {Ref, ref,watch,nextTick,toRefs ,PropType} from "vue";
 //entity
-import { IFormBase } from "@/entitytype/common";
+import { IFormBase } from "@/entity/common";
 
 const props = defineProps({
     selectObj:{

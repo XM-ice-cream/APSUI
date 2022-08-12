@@ -7,8 +7,8 @@
     import Card from "@/components/Card/Card.vue";
     import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
     //entity
-    import { BaseInfo } from "@/entitytype/maintenance/baseInfo";
-    import { IFormBase,ITableBase } from "@/entitytype/common";
+    import { BaseInfo } from "@/entity/maintenance/baseInfo";
+    import { IFormBase,ITableBase } from "@/entity/common";
 
     const props = defineProps({
         Column:{

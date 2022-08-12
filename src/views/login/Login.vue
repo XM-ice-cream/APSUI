@@ -3,7 +3,7 @@ import { Ref, ref } from "vue";
 import { useRouter } from "vue-router";
 import { rules } from "./baseData";
 import { userLoginApi ,getUserListApi} from "@/apis/user";
-import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entityType/user"
+import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entity/user"
 import useLoging from "@/libs/hooks/useLoging";
 //两个非常常用的响应式 API：reactive 和 ref
 
