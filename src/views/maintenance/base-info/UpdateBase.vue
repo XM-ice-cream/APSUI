@@ -1,9 +1,10 @@
 
-<script setup lang="ts">
+<script setup lang="ts" name="UpdateBase">
 //vue 内置
 import { ElMessage } from "element-plus";
-import { ref,watch,nextTick } from "vue";
+import {Ref, ref,watch,nextTick,toRefs ,PropType} from "vue";
 //entity
+import { IUpdateBase } from "@/entitytype/common";
 import { UpdateBaseInfo } from "@/entitytype/maintenance/baseInfo";
 //api
 import { addReq ,updateReq } from "@/apis/maintenance/baseInfo";
@@ -12,13 +13,18 @@ const props = defineProps({
     data:{
         type:Object,
         default:()=>{}
+    },
+    UpdateForm:{
+        type:Array as PropType<IUpdateBase[]>,
+        default:()=>[]
     }
 })
+const { UpdateForm } =toRefs(props) ;
 
 const submitRef =ref(null);
 let dialogVisible = ref<boolean>(false);//弹框
 let dialogTitle = ref("新增");//
-let submitReq = ref({
+let submitReq:Ref<any> = ref({
     modelId: "",//机种ID
     workOrder: "",//工单
     processLineId:"",//制程段Id
@@ -56,7 +62,7 @@ const handleClose=()=>{
     dialogVisible.value = false;        
 }
 
-watch(() => dialogVisible.value, newValue => {
+watch(() => dialogVisible.value, (newValue,oldValue) => {
     //注意:此时的watch第一个参数是一个箭头函数。
     //监听对象中的某个属性
     if(newValue){
@@ -76,34 +82,11 @@ watch(() => dialogVisible.value, newValue => {
   <div>
      <el-dialog v-model="dialogVisible" :title="dialogTitle" width="30%" :before-close="handleClose">
         <el-form class="form-inline" label-width="120px" ref="submitRef"  :model="submitReq" >
-            <!-- 机种ID -->
-            <el-form-item label="机种ID" prop="modelId">
-                 <el-input v-model="submitReq.modelId" placeholder="请输入机种" />
-            </el-form-item>
-            <!-- 工单 -->
-            <el-form-item label="工单" prop="workOrder">
-                 <el-input v-model="submitReq.workOrder" placeholder="请输入工单" />
-            </el-form-item>
-            <!-- 制程段ID -->
-            <el-form-item label="制程段ID" prop="processLineId">
-                 <el-input v-model="submitReq.processLineId" placeholder="请输入制程段ID" />
-            </el-form-item>
-            <!-- UPH -->
-            <el-form-item label="最大产能" prop="uph">
-                 <el-input v-model="submitReq.uph" placeholder="请输入最大产能" />
-            </el-form-item>
-            <!-- 工作排程时间ID -->
-            <el-form-item label="工作排程时间ID" prop="workDayId">
-                  <el-input v-model="submitReq.workDayId" placeholder="请输入工作排程时间ID" />
-            </el-form-item>
-            <!-- 排序 -->
-            <el-form-item label="排序" prop="seq">
-                  <el-input v-model="submitReq.seq" placeholder="请输入排序" />
-            </el-form-item>
-            <!-- 优先级 -->
-            <el-form-item label="优先级" prop="priority">
-                  <el-input v-model="submitReq.priority" placeholder="请输入优先级" />
-            </el-form-item>
+            <template v-for="item in UpdateForm">
+                <el-form-item :label="item.label" :prop="item.prop">
+                    <el-input v-model="submitReq[item.prop]" :placeholder="item.pleaseholder" />
+                </el-form-item>
+            </template>
         </el-form>
         <template #footer>
         <span class="dialog-footer">
