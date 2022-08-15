@@ -1,13 +1,12 @@
-<script lang="ts" setup name="BaseInfo">
+<script lang="ts" setup name="viewDate">
     //vue 内置
-    import { Ref,ref,onMounted,toRefs,PropType } from "vue";
+    import { ref,onMounted,toRefs,PropType,nextTick } from "vue";
     // 参数
     import { dateFormat } from "@/libs/utils"
     //自定义组件
     import Card from "@/components/Card/Card.vue";
     import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
     //entity
-    import { BaseInfo } from "@/entity/maintenance/baseInfo";
     import { IFormBase,ITableBase } from "@/entity/common";
 
     const props = defineProps({
@@ -26,28 +25,28 @@
         tableData:{
             type:Array,
             default:()=>[]
-        }
+        },
     })
-    const {Column, SearchForm,req,tableData } =toRefs(props) ;
+    const { Column, SearchForm,req,tableData } =toRefs(props) ;
   
     const reqRef = ref(null); 
     const tableConfig = ref({
-            height:document.body.clientHeight - 230
+            height:200
     })//表格设定
    const emit = defineEmits(["update:req","pageLoad","handleDelete","updateBase"]);
-   // 查询
+    // 查询
     const pageLoad = ()=>{
        emit("update:req",req.value)
        emit("pageLoad");
     }
-    //删除
-    const  handleDelete=(row: BaseInfo)=> {  
-       emit("handleDelete",row);
-    }
-    //新增
-    const  updateBase = (row: BaseInfo)=> {  
+     //新增、编辑
+    const  updateBase = (row: any)=> {  
        emit("updateBase",row);
     }
+    //删除
+    const  handleDelete=(row: any)=> {  
+       emit("handleDelete",row);
+    }   
 
     //表格 index
     const indexMethod = (index: number)=>{
@@ -67,7 +66,9 @@
     }
     // 自动改变表格高度
     const autoSize = () => {
-        tableConfig.value.height = document.body.clientHeight - 230;
+        nextTick(() => {
+           tableConfig.value.height = document.body.clientHeight - 230;
+        });       
     }
     //重置
     const resetClick = () => {
@@ -111,15 +112,12 @@
         />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
-            <el-button size="small" @click="updateBase(scope.row)"
-              >编辑</el-button
-            >
+            <el-button size="small" @click="updateBase(scope.row)">编辑</el-button>
             <el-button
               size="small"
               type="danger"
               @click="handleDelete(scope.row)"
-              >删除</el-button
-            >
+              >删除</el-button>
           </template>
         </el-table-column>
       </el-table>

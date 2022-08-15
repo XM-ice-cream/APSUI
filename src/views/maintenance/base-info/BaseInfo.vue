@@ -10,7 +10,7 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { IBaseInfoQuery,IUpdateBaseInfo } from "@/entity/maintenance/baseInfo";
+import { IBaseInfoQuery,IUpdateBaseInfo} from "@/entity/maintenance/baseInfo";
 //api
 import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/baseInfo";
 
@@ -90,7 +90,7 @@ const  handleDelete=(row: IUpdateBaseInfo)=> {
     })
 }
 //弹框
-const  updateBase = (row: IUpdateBaseInfo)=> {  
+const  updateBase = (row: IUpdateBaseInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});
@@ -106,12 +106,12 @@ onMounted(() => {
         :Column="Column"
         :SearchForm="SearchForm" 
         :req="req" 
-        :tableData="tableData" 
+        :tableData="tableData"        
         @pageLoad="pageLoad" 
         @handleDelete="handleDelete" 
         @updateBase="updateBase"
         />
-     <UpdateData ref="updateDataRef" :UpdateForm="UpdateForm" :selectObj = "selectObj" v-model:dialogVisible="dialogVisible" :submitReq ="submitReq" @reLoad="sumbit"/>
+     <UpdateData ref="updateDataRef" :UpdateForm="UpdateForm" :selectObj = "selectObj" :dialogVisible="dialogVisible" :submitReq ="submitReq" @reLoad="sumbit"/>
   </div>
 </template>
 
