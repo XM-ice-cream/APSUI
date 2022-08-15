@@ -2,6 +2,9 @@
 <script setup lang="ts" name="PaginationCustom">
 import { toRefs,inject } from "vue"
 
+import { GlobalVariableType } from "@/entity/common";
+
+
 const props = defineProps({
     elapsedMilliseconds:{
         type:Number,
@@ -26,7 +29,7 @@ const props = defineProps({
 })
 const {elapsedMilliseconds,total,totalPage,pageIndex,pageSize} = toRefs(props) //具有响应式 指针指向props下面对应的属性值
 //全局变量
-const $config:any = inject("$config");
+const $config = inject<GlobalVariableType>("$config");
 
 //子组件调用父组件方法
 const emit = defineEmits(["handleCurrentChange","handleSizeChange"]);
@@ -50,7 +53,7 @@ const  handleSizeChange = (index:number) => {
       :currentPage="pageIndex"
       :page-size="pageSize"
       :total="total"
-      :page-sizes="$config.pageSizeList"      
+      :page-sizes="$config!.pageSizeList"      
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange">
      

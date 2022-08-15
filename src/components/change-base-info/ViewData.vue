@@ -7,7 +7,7 @@
     import Card from "@/components/Card/Card.vue";
     import PaginationCustom from "@/components/pagination-custom/PaginationCustom.vue";
     //entity
-    import { IFormBase,ITableBase } from "@/entity/common";
+    import { GlobalVariableType, IFormBase,ITableBase } from "@/entity/common";
 
     const props = defineProps({
         Column:{
@@ -27,15 +27,16 @@
             default:()=>[]
         },
         loading:{
-            type:Boolean,
-            default:false,
+            type:Boolean ,
+            default:false
         }
     }) 
     const { Column, SearchForm,req,tableData } =toRefs(props) ;
 
     //全局变量
-    const $config:any = inject("$config");
-    const tableConfig = ref({...$config.tableConfig})
+    const $config = inject<GlobalVariableType>("$config");
+    const tableConfig = ref({...($config as GlobalVariableType).tableConfig});
+
     const reqRef = ref(null); 
 
     const emit = defineEmits(["update:req","pageLoad","deleteClick","updateClick"]);
@@ -86,15 +87,16 @@
 </script>
 <template>
   <div class="base-info-box">
-      <el-form  class="form-inline" label-width="50px" ref="reqRef" :inline="true" :model="req">
+      <el-form  class="form-inline" label-width="100px" ref="reqRef" :inline="true" :model="req">
        <template v-for="(item,key) in SearchForm">
         <el-form-item :label="item.label" :prop="item.prop">
-            <el-input v-model="req[item.prop]" :placeholder="item.pleaseholder" />
+            <el-input v-if="item.type==='input'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`"  />
+            <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" />
         </el-form-item>
        </template>
         <el-form-item>
           <el-button type="primary" @click="pageLoad">搜索</el-button>
-          <el-button @click="resetClick()">重置</el-button>
+          <el-button class="reset" @click="resetClick()">重置</el-button>
         </el-form-item>
       </el-form>
     <Card>
@@ -115,7 +117,7 @@
         />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
-            <el-button size="small" @click="updateClick(scope.row)">编辑</el-button>
+            <el-button size="small" class="reset"  @click="updateClick(scope.row)">编辑</el-button>
             <el-button
               size="small"
               type="danger"

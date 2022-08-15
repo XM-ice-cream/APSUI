@@ -36,23 +36,21 @@ const changeCollapse = () => {
         <span v-if="!store.collapse">&nbsp;APS</span>
       </div>
       <el-menu-item index="/index/home">
-        <el-icon>
-          <List />
-        </el-icon>
+        <el-icon><HomeFilled /></el-icon>
         <template #title>首页</template>
       </el-menu-item>
-       <el-menu-item index="/goods/goodsList">
-        <el-icon>
-          <List />
-        </el-icon>
-        <template #title>Goods</template>
-      </el-menu-item>
-      <el-menu-item index="/maintenance/base-info">
-        <el-icon>
-          <List />
-        </el-icon>
-        <template #title>基础信息</template>
-      </el-menu-item>
+        <el-sub-menu index="/maintenance">
+             <template #title>
+                <el-icon>
+                    <List />
+                </el-icon>
+                <span>维护中心</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item index="/maintenance/base-info">基础信息</el-menu-item>
+                <el-menu-item index="/maintenance/eqp-info">设备信息</el-menu-item>
+            </el-menu-item-group>
+      </el-sub-menu>
       <!-- <div v-for="(item, index) of store.userRouters" :key="index">
         <MenuItem :index="(index + 1).toString()" :collapse="store.collapse" :item="item" />
       </div> -->
@@ -119,14 +117,12 @@ const changeCollapse = () => {
 .el-menu-item.is-active {  
     width: 97%;
     margin: 0 auto;
-    padding-left: 0.15rem !important;
     background-color: #6730db !important;
     border-radius: 0.4rem;
 }
 :deep(.el-menu-item:hover) {
-   width: 97%;
+    width: 97%;
     margin: 0 auto;
-    padding-left: 0.15rem !important;
     background-color: #6730db !important;
     border-radius: 0.4rem;
 }

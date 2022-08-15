@@ -1,4 +1,4 @@
-<script lang="ts" setup name="BaseInfo">
+<script lang="ts" setup name="EqpInfo">
 //vue 内置
 import { ElMessage } from "element-plus";
 import { Ref,ref,onMounted,inject } from "vue";
@@ -11,9 +11,9 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { IBaseInfoQuery,IBaseInfoSubmitInfo,IBaseInfoReq} from "@/entity/maintenance/baseInfo";
+import { IEqpInfoQuery,IEqpInfoSubmitInfo,IEqpInfoReq} from "@/entity/maintenance/eqpInfo";
 //api
-import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/baseInfo";
+import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/eqpInfo";
 import { GlobalVariableType } from "@/entity/common";
 
 //全局变量
@@ -24,19 +24,15 @@ const updateDataRef = ref();
 const dialogVisible = ref(false);
 const selectObj = ref({});//选中值
 const tableData = ref([]);//表格值
-const submitReq:Ref<IBaseInfoSubmitInfo> = ref({
-    modelId: "",//机种ID
-    workOrder: "",//工单
-    processLineId:"",//制程段Id
-    uph:0,//最大产能
-    workDayId:"",//工作排程时间ID
-    seq:0,//排序（第一段、第二段、第三段）
-    priority:9,//优先级 数字越小 级别越高
+const submitReq:Ref<IEqpInfoSubmitInfo> = ref({
+    eqpCode: "",//设备编码
+    eqpName: "",//设备名称
+    location:"",//位置
+    qty:0,//数量
     id:"",
 })
-const req: Ref<IBaseInfoReq>  = ref({
-        modelId: "",
-        workOrder: "",
+const req: Ref<IEqpInfoReq>  = ref({
+       eqpCode: "",
         ...($config as GlobalVariableType).pageConfig
       
 })//表单参数
@@ -44,15 +40,14 @@ const req: Ref<IBaseInfoReq>  = ref({
 
 // 查询
 const pageLoad = ()=>{
-    const { modelId,workOrder,pageIndex,pageSize} = req.value;
-    const obj:IBaseInfoQuery = {
-            orderField:"workOrder", // 排序字段
+    const { eqpCode,pageIndex,pageSize} = req.value;
+    const obj:IEqpInfoQuery = {
+            orderField:"eqpCode", // 排序字段
             ascending: true, // 是否升序
             pageSize, // 分页大小
             pageIndex, // 当前页码
             data: { 
-                modelId,
-                workOrder
+                eqpCode,
             },
     };
     tableConfig.value.loading=true;
@@ -66,9 +61,9 @@ const pageLoad = ()=>{
     }).finally(()=>{ tableConfig.value.loading = false; })
 }
 //新增、编辑
-const sumbitClick =(row :IBaseInfoSubmitInfo)=>{
-    const { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id } = row;
-    const obj = { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id };
+const sumbitClick =(row :IEqpInfoSubmitInfo)=>{
+    const { id, eqpCode,eqpName,location,qty } = row;
+    const obj = {  id, eqpCode,eqpName,location,qty };
     const requestApi = obj.id?updateReq:addReq;
     requestApi(obj).then(res=>{
         if(res.code==200){
@@ -82,7 +77,7 @@ const sumbitClick =(row :IBaseInfoSubmitInfo)=>{
 }
 
 //删除
-const  deleteClick=(row: IBaseInfoSubmitInfo)=> {  
+const  deleteClick=(row: IEqpInfoSubmitInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
     deteteReq({id:row?.id??''}).then(res=>{
         if(res.code===200){
@@ -94,7 +89,7 @@ const  deleteClick=(row: IBaseInfoSubmitInfo)=> {
     })
 }
 //弹框
-const  updateClick = (row: IBaseInfoSubmitInfo | {})=> {  
+const  updateClick = (row: IEqpInfoSubmitInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});

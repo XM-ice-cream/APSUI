@@ -27,7 +27,6 @@ export interface IRes {
 export interface IFormBase {
 	label: string
 	prop: string
-	pleaseholder: string
 	type: string
 }
 //请求参数
@@ -49,4 +48,14 @@ export interface ITableBase {
 	width?: string
 	minWidth?: string
 	formatter?: string
+}
+
+//全局变量
+export type GlobalVariableType = {
+	pageSizeList: Array<number>
+	pageConfig: IReq
+	tableConfig: {
+		loading: Boolean
+		height: Number
+	}
 }

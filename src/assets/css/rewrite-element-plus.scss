@@ -5,7 +5,7 @@
     --el-color-primary-light-3: #9469e9;
     --el-color-primary-light-7: #9469e9;
     --el-color-primary-light-9: #f9f7ff;
-    --el-border-color: #7c40f1;
+    --el-border-color: #ebeef5;
     --el-button-hover-border-color: #7c40f1;
     --el-color-primary-dark-2: #580bed;
     --el-menu-bg-color: #7c40f1;
@@ -18,4 +18,17 @@
 
 .el-message__icon {
     font-size: 0.32rem;
+}
+
+.el-input-number {
+    width: 100% !important;
+}
+
+.el-sub-menu .el-menu-item {
+    height: 40px;
+    line-height: 40px;
+}
+
+.reset {
+    border: 1px solid #7c40f1 !important
 }
