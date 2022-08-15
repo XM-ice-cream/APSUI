@@ -1,5 +1,5 @@
 // BaseInfo 基础信息维护
-import { IPagination, IBaseEntity } from '@/entity/common'
+import { IPagination, IBaseEntity, IReq } from '@/entity/common'
 
 // 分页查询
 export interface IBaseInfoQuery extends IPagination {
@@ -8,9 +8,14 @@ export interface IBaseInfoQuery extends IPagination {
 		workOrder: string
 	}
 }
+//查询 IReq为分页参数
+export interface IBaseInfoReq extends IReq {
+	modelId: string
+	workOrder: string
+}
 
 // 新增、修改
-export interface IUpdateBaseInfo extends IBaseEntity {
+export interface IBaseInfoSubmitInfo extends IBaseEntity {
 	modelId: string
 	workOrder: string
 	processLineId: string

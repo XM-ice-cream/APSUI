@@ -30,6 +30,16 @@ export interface IFormBase {
 	pleaseholder: string
 	type: string
 }
+//请求参数
+export interface IReq {
+	orderField: string
+	ascending: Boolean
+	pageSize: number
+	pageIndex: number
+	total: number
+	totalPage: number
+	elapsedMilliseconds: number
+}
 
 export interface ITableBase {
 	key: string

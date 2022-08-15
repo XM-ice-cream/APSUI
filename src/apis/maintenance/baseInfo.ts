@@ -2,7 +2,7 @@
 import Fetch from '@/libs/axios'
 import {
 	IBaseInfoQuery,
-	IUpdateBaseInfo,
+	IBaseInfoSubmitInfo,
 	DeleteBaseInfo,
 } from '@/entity/maintenance/baseInfo'
 
@@ -23,9 +23,9 @@ export const getPageListReq = (data: IBaseInfoQuery) => {
 /**
  * @description 新增
  * @param data
- * @type UpdateBaseInfo
+ * @type IBaseInfoSubmitInfo
  */
-export const addReq = (data: IUpdateBaseInfo) => {
+export const addReq = (data: IBaseInfoSubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/addbaseinfo',
@@ -36,9 +36,9 @@ export const addReq = (data: IUpdateBaseInfo) => {
 /**
  * @description 更新
  * @param data
- * @type UpdateBaseInfo
+ * @type IBaseInfoSubmitInfo
  */
-export const updateReq = (data: IUpdateBaseInfo) => {
+export const updateReq = (data: IBaseInfoSubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/modifybaseinfo',

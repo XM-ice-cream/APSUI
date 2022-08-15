@@ -41,7 +41,7 @@
             <el-button
               size="small"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)"
+              @click="deleteClick(scope.$index, scope.row)"
               >删除</el-button
             >
           </template>
@@ -76,7 +76,7 @@ export default defineComponent({
 
     const handleEdit = (index: number, row: any) => {};
 
-    const handleDelete = (index: number, row: any) => {};
+    const deleteClick = (index: number, row: any) => {};
 
     const onSubmit = () => {};
 
@@ -86,7 +86,7 @@ export default defineComponent({
       Column,
       onSubmit,
       handleEdit,
-      handleDelete,
+      deleteClick,
     };
   },
 });

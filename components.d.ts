@@ -32,6 +32,7 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTag: typeof import('element-plus/es')['ElTag']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     NotFound: typeof import('./src/components/not-found/NotFound.vue')['default']
     PaginationCustom: typeof import('./src/components/pagination-custom/PaginationCustom.vue')['default']
     ParentView: typeof import('./src/components/parent-view/ParentView.vue')['default']

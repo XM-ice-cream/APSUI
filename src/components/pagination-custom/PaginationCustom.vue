@@ -1,6 +1,6 @@
 <!-- 表格 分页 自定义封装 -->
 <script setup lang="ts" name="PaginationCustom">
-import { toRefs } from "vue"
+import { toRefs,inject } from "vue"
 
 const props = defineProps({
     elapsedMilliseconds:{
@@ -25,6 +25,8 @@ const props = defineProps({
     } // 每页大小
 })
 const {elapsedMilliseconds,total,totalPage,pageIndex,pageSize} = toRefs(props) //具有响应式 指针指向props下面对应的属性值
+//全局变量
+const $config:any = inject("$config");
 
 //子组件调用父组件方法
 const emit = defineEmits(["handleCurrentChange","handleSizeChange"]);
@@ -48,7 +50,7 @@ const  handleSizeChange = (index:number) => {
       :currentPage="pageIndex"
       :page-size="pageSize"
       :total="total"
-      :page-sizes="[5, 30, 50, 100]"      
+      :page-sizes="$config.pageSizeList"      
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange">
      

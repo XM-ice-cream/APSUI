@@ -1,6 +1,6 @@
-<script lang="ts" setup name="viewDate">
+<script lang="ts" setup name="ViewDate">
     //vue 内置
-    import { ref,onMounted,toRefs,PropType,nextTick } from "vue";
+    import { ref,onMounted,toRefs,PropType,nextTick,inject } from "vue";
     // 参数
     import { dateFormat } from "@/libs/utils"
     //自定义组件
@@ -26,33 +26,37 @@
             type:Array,
             default:()=>[]
         },
-    })
+        loading:{
+            type:Boolean,
+            default:false,
+        }
+    }) 
     const { Column, SearchForm,req,tableData } =toRefs(props) ;
-  
+
+    //全局变量
+    const $config:any = inject("$config");
+    const tableConfig = ref({...$config.tableConfig})
     const reqRef = ref(null); 
-    const tableConfig = ref({
-            height:200
-    })//表格设定
-   const emit = defineEmits(["update:req","pageLoad","handleDelete","updateBase"]);
+
+    const emit = defineEmits(["update:req","pageLoad","deleteClick","updateClick"]);
+
     // 查询
     const pageLoad = ()=>{
        emit("update:req",req.value)
        emit("pageLoad");
     }
      //新增、编辑
-    const  updateBase = (row: any)=> {  
-       emit("updateBase",row);
+    const  updateClick = (row: any)=> {  
+       emit("updateClick",row);
     }
     //删除
-    const  handleDelete=(row: any)=> {  
-       emit("handleDelete",row);
+    const  deleteClick=(row: any)=> {  
+       emit("deleteClick",row);
     }   
-
     //表格 index
     const indexMethod = (index: number)=>{
         return  (req.value.pageIndex - 1) * req.value.pageSize + index + 1;
     }
-
     // 选择第几页
     const pageChange =(index:number)=> {
         req.value.pageIndex = index;
@@ -76,7 +80,6 @@
     }    
 
     onMounted(() => {        
-        pageLoad();
         autoSize();
         addEventListener("resize", () => autoSize()); 
     }) ;
@@ -96,9 +99,9 @@
       </el-form>
     <Card>
      <div class="operator fr">
-         <el-button type="primary" @click="updateBase({})"> + 添加</el-button>
+         <el-button type="primary" @click="updateClick({})"> + 添加</el-button>
      </div>
-      <el-table :data="tableData" fixed="right"  :height="tableConfig.height">
+      <el-table :data="tableData" fixed="right"  :height="tableConfig.height" v-loading="loading">
        <el-table-column type="index" label="#" :index="indexMethod" />
         <el-table-column
           v-for="(item, index) in Column"
@@ -112,11 +115,11 @@
         />
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
-            <el-button size="small" @click="updateBase(scope.row)">编辑</el-button>
+            <el-button size="small" @click="updateClick(scope.row)">编辑</el-button>
             <el-button
               size="small"
               type="danger"
-              @click="handleDelete(scope.row)"
+              @click="deleteClick(scope.row)"
               >删除</el-button>
           </template>
         </el-table-column>
