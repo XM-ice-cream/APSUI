@@ -1,3 +1,4 @@
+<!-- 基础信息维护 -->
 <script lang="ts" setup name="BaseInfo">
 //vue 内置
 import { ElMessage } from "element-plus";

@@ -41,6 +41,14 @@ const Routes = [
 						/* chunkName: EqpInfo */ '@/views/maintenance/eqp-info/EqpInfo.vue'
 					),
 			},
+			{
+				path: '/maintenance/line',
+				name: 'Line',
+				component: () =>
+					import(
+						/* chunkName: Line */ '@/views/maintenance/line/Line.vue'
+					),
+			},
 		],
 	},
 ]

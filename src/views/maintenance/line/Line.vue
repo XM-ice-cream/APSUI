@@ -1,5 +1,5 @@
-<!-- 设备基础信息维护 -->
-<script lang="ts" setup name="EqpInfo">
+<!-- 线体基础信息维护 -->
+<script lang="ts" setup name="Line">
 //vue 内置
 import { ElMessage } from "element-plus";
 import { Ref,ref,onMounted,inject } from "vue";
@@ -12,9 +12,9 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { IEqpInfoQuery,IEqpInfoSubmitInfo,IEqpInfoReq} from "@/entity/maintenance/eqpInfo";
+import { ILineQuery,ILineSubmitInfo,ILineReq} from "@/entity/maintenance/line";
 //api
-import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/eqpInfo";
+import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/line";
 import { GlobalVariableType } from "@/entity/common";
 
 //全局变量
@@ -25,15 +25,13 @@ const updateDataRef = ref();
 const dialogVisible = ref(false);
 const selectObj = ref({});//选中值
 const tableData = ref([]);//表格值
-const submitReq:Ref<IEqpInfoSubmitInfo> = ref({
-    eqpCode: "",//设备编码
-    eqpName: "",//设备名称
-    location:"",//位置
-    qty:0,//数量
+const submitReq:Ref<ILineSubmitInfo> = ref({
+    lineCode: "",//线体Code
+    lineName: "",//线体名称
     id:"",
 })
-const req: Ref<IEqpInfoReq>  = ref({
-       eqpCode: "",
+const req: Ref<ILineReq>  = ref({
+       lineCode: "",
         ...($config as GlobalVariableType).pageConfig
       
 })//表单参数
@@ -41,14 +39,14 @@ const req: Ref<IEqpInfoReq>  = ref({
 
 // 查询
 const pageLoad = ()=>{
-    const { eqpCode,pageIndex,pageSize} = req.value;
-    const obj:IEqpInfoQuery = {
-            orderField:"eqpCode", // 排序字段
+    const { lineCode,pageIndex,pageSize} = req.value;
+    const obj:ILineQuery = {
+            orderField:"lineCode", // 排序字段
             ascending: true, // 是否升序
             pageSize, // 分页大小
             pageIndex, // 当前页码
             data: { 
-                eqpCode,
+                lineCode,
             },
     };
     tableConfig.value.loading=true;
@@ -62,9 +60,9 @@ const pageLoad = ()=>{
     }).finally(()=>{ tableConfig.value.loading = false; })
 }
 //新增、编辑
-const sumbitClick =(row :IEqpInfoSubmitInfo)=>{
-    const { id, eqpCode,eqpName,location,qty } = row;
-    const obj = {  id, eqpCode,eqpName,location,qty };
+const sumbitClick =(row :ILineSubmitInfo)=>{
+    const { id, lineCode,lineName } = row;
+    const obj = {  id, lineCode,lineName };
     const requestApi = obj.id?updateReq:addReq;
     requestApi(obj).then(res=>{
         if(res.code==200){
@@ -78,7 +76,7 @@ const sumbitClick =(row :IEqpInfoSubmitInfo)=>{
 }
 
 //删除
-const  deleteClick=(row: IEqpInfoSubmitInfo)=> {  
+const  deleteClick=(row: ILineSubmitInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
     deteteReq({id:row?.id??''}).then(res=>{
         if(res.code===200){
@@ -90,7 +88,7 @@ const  deleteClick=(row: IEqpInfoSubmitInfo)=> {
     })
 }
 //弹框
-const  updateClick = (row: IEqpInfoSubmitInfo | {})=> {  
+const  updateClick = (row: ILineSubmitInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});
