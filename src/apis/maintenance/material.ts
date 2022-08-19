@@ -1,6 +1,6 @@
-//基础信息 维护
+//物料信息 维护
 import Fetch from '@/libs/axios'
-import { ISubmitInfo, ISearchInfo } from '@/entity/maintenance/line'
+import { ISubmitInfo, ISearchInfo } from '@/entity/maintenance/material'
 import { IPagination } from '@/entity/common'
 
 /**
@@ -11,7 +11,7 @@ import { IPagination } from '@/entity/common'
 export const getPageListReq = (data: IPagination<ISearchInfo>) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
-		url: '/api/apscenter/v1/line/getpagelist',
+		url: '/api/apscenter/v1/material/getpagelist',
 		method: 'post',
 		data,
 	})
@@ -25,7 +25,7 @@ export const getPageListReq = (data: IPagination<ISearchInfo>) => {
 export const addReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
-		url: '/api/apscenter/v1/line/addline',
+		url: '/api/apscenter/v1/material/addmaterial',
 		method: 'post',
 		data,
 	})
@@ -38,7 +38,7 @@ export const addReq = (data: ISubmitInfo) => {
 export const updateReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
-		url: '/api/apscenter/v1/line/modifyline',
+		url: '/api/apscenter/v1/material/modifymaterial',
 		method: 'put',
 		data,
 	})
@@ -52,7 +52,7 @@ export const updateReq = (data: ISubmitInfo) => {
 export const deteteReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
-		url: '/api/apscenter/v1/line/deleteLine',
+		url: '/api/apscenter/v1/material/deletematerial',
 		method: 'delete',
 		data,
 	})

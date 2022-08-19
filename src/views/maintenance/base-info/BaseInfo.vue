@@ -12,10 +12,10 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { IBaseInfoQuery,IBaseInfoSubmitInfo,IBaseInfoReq} from "@/entity/maintenance/baseInfo";
+import { ISearchInfo ,ISubmitInfo,ISearchReq } from "@/entity/maintenance/baseInfo";
+import { IPagination ,GlobalVariableType } from"@/entity/common";
 //api
 import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/baseInfo";
-import { GlobalVariableType } from "@/entity/common";
 
 //全局变量
 const $config = inject<GlobalVariableType>("$config");
@@ -25,7 +25,7 @@ const updateDataRef = ref();
 const dialogVisible = ref(false);
 const selectObj = ref({});//选中值
 const tableData = ref([]);//表格值
-const submitReq:Ref<IBaseInfoSubmitInfo> = ref({
+const submitReq:Ref<ISubmitInfo> = ref({
     modelId: "",//机种ID
     workOrder: "",//工单
     processLineId:"",//制程段Id
@@ -35,10 +35,10 @@ const submitReq:Ref<IBaseInfoSubmitInfo> = ref({
     priority:9,//优先级 数字越小 级别越高
     id:"",
 })
-const req: Ref<IBaseInfoReq>  = ref({
+const req: Ref<ISearchReq>  = ref({
         modelId: "",
         workOrder: "",
-        ...($config as GlobalVariableType).pageConfig
+         ...($config as GlobalVariableType).pageConfig
       
 })//表单参数
 
@@ -46,7 +46,7 @@ const req: Ref<IBaseInfoReq>  = ref({
 // 查询
 const pageLoad = ()=>{
     const { modelId,workOrder,pageIndex,pageSize} = req.value;
-    const obj:IBaseInfoQuery = {
+    const obj:IPagination<ISearchInfo> = {
             orderField:"workOrder", // 排序字段
             ascending: true, // 是否升序
             pageSize, // 分页大小
@@ -67,7 +67,7 @@ const pageLoad = ()=>{
     }).finally(()=>{ tableConfig.value.loading = false; })
 }
 //新增、编辑
-const sumbitClick =(row :IBaseInfoSubmitInfo)=>{
+const sumbitClick =(row :ISubmitInfo)=>{
     const { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id } = row;
     const obj = { modelId,workOrder,processLineId,uph,workDayId,seq,priority,id };
     const requestApi = obj.id?updateReq:addReq;
@@ -83,7 +83,7 @@ const sumbitClick =(row :IBaseInfoSubmitInfo)=>{
 }
 
 //删除
-const  deleteClick=(row: IBaseInfoSubmitInfo)=> {  
+const  deleteClick=(row: ISubmitInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
     deteteReq({id:row?.id??''}).then(res=>{
         if(res.code===200){
@@ -95,7 +95,7 @@ const  deleteClick=(row: IBaseInfoSubmitInfo)=> {
     })
 }
 //弹框
-const  updateClick = (row: IBaseInfoSubmitInfo | {})=> {  
+const  updateClick = (row: ISubmitInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});

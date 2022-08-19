@@ -12,10 +12,10 @@ import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
 
 //entity
-import { ILineQuery,ILineSubmitInfo,ILineReq} from "@/entity/maintenance/line";
+import { ISearchInfo ,ISubmitInfo,ISearchReq } from "@/entity/maintenance/line";
+import { IPagination,GlobalVariableType } from"@/entity/common";
 //api
 import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/line";
-import { GlobalVariableType } from "@/entity/common";
 
 //全局变量
 const $config = inject<GlobalVariableType>("$config");
@@ -25,12 +25,12 @@ const updateDataRef = ref();
 const dialogVisible = ref(false);
 const selectObj = ref({});//选中值
 const tableData = ref([]);//表格值
-const submitReq:Ref<ILineSubmitInfo> = ref({
+const submitReq:Ref<ISubmitInfo> = ref({
     lineCode: "",//线体Code
     lineName: "",//线体名称
     id:"",
 })
-const req: Ref<ILineReq>  = ref({
+const req: Ref<ISearchReq>  = ref({
        lineCode: "",
         ...($config as GlobalVariableType).pageConfig
       
@@ -40,7 +40,7 @@ const req: Ref<ILineReq>  = ref({
 // 查询
 const pageLoad = ()=>{
     const { lineCode,pageIndex,pageSize} = req.value;
-    const obj:ILineQuery = {
+    const obj:IPagination<ISearchInfo> = {
             orderField:"lineCode", // 排序字段
             ascending: true, // 是否升序
             pageSize, // 分页大小
@@ -60,7 +60,7 @@ const pageLoad = ()=>{
     }).finally(()=>{ tableConfig.value.loading = false; })
 }
 //新增、编辑
-const sumbitClick =(row :ILineSubmitInfo)=>{
+const sumbitClick =(row :ISubmitInfo)=>{
     const { id, lineCode,lineName } = row;
     const obj = {  id, lineCode,lineName };
     const requestApi = obj.id?updateReq:addReq;
@@ -76,7 +76,7 @@ const sumbitClick =(row :ILineSubmitInfo)=>{
 }
 
 //删除
-const  deleteClick=(row: ILineSubmitInfo)=> {  
+const  deleteClick=(row: ISubmitInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
     deteteReq({id:row?.id??''}).then(res=>{
         if(res.code===200){
@@ -88,7 +88,7 @@ const  deleteClick=(row: ILineSubmitInfo)=> {
     })
 }
 //弹框
-const  updateClick = (row: ILineSubmitInfo | {})=> {  
+const  updateClick = (row: ISubmitInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});

@@ -1,17 +1,14 @@
 //基础信息 维护
 import Fetch from '@/libs/axios'
-import {
-	IBaseInfoQuery,
-	IBaseInfoSubmitInfo,
-	DeleteBaseInfo,
-} from '@/entity/maintenance/baseInfo'
+import { ISubmitInfo, ISearchInfo } from '@/entity/maintenance/baseInfo'
+import { IPagination } from '@/entity/common'
 
 /**
  * @description 分页查询
  * @param data
- * @interface IBaseInfoQuery
+ * @interface IPagination<ISearchInfo>
  */
-export const getPageListReq = (data: IBaseInfoQuery) => {
+export const getPageListReq = (data: IPagination<ISearchInfo>) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/getpagelist',
@@ -23,9 +20,9 @@ export const getPageListReq = (data: IBaseInfoQuery) => {
 /**
  * @description 新增
  * @param data
- * @type IBaseInfoSubmitInfo
+ * @interface ISubmitInfo
  */
-export const addReq = (data: IBaseInfoSubmitInfo) => {
+export const addReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/addbaseinfo',
@@ -36,9 +33,9 @@ export const addReq = (data: IBaseInfoSubmitInfo) => {
 /**
  * @description 更新
  * @param data
- * @type IBaseInfoSubmitInfo
+ * @interface ISubmitInfo
  */
-export const updateReq = (data: IBaseInfoSubmitInfo) => {
+export const updateReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/modifybaseinfo',
@@ -50,9 +47,9 @@ export const updateReq = (data: IBaseInfoSubmitInfo) => {
 /**
  * @description 删除
  * @param data
- * @type DeleteBaseInfo
+ * @interface ISubmitInfo
  */
-export const deteteReq = (data: DeleteBaseInfo) => {
+export const deteteReq = (data: ISubmitInfo) => {
 	return Fetch({
 		baseUrl: 'http://10.32.44.91:8080',
 		url: '/api/apscenter/anonymous/v1/baseinfo/deletebaseinfo',

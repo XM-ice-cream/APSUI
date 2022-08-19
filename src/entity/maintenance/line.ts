@@ -1,23 +1,16 @@
-// Line 基础信息维护
-import { IPagination, IBaseEntity, IReq } from '@/entity/common'
+// 线体 基础信息维护
+import { IBaseEntity, IPageTable } from '@/entity/common'
 
-// 分页查询
-export interface ILineQuery extends IPagination {
-	data: {
-		lineCode: string
-	}
-}
-//查询 IReq为分页参数
-export interface ILineReq extends IReq {
-	lineCode: string
-}
+//查询条件
+export interface ISearchReq extends ISearchInfo, IPageTable {}
 
-// 新增、修改
-export interface ILineSubmitInfo extends IBaseEntity {
-	lineCode: string
-	lineName: string
-}
-// 删除
-export type DeleteLine = {
-	id: string
+//查询参数
+export interface ISearchInfo extends IBaseInfo {}
+
+// 新增、修改、删除
+export interface ISubmitInfo extends IBaseInfo, IBaseEntity {}
+
+export interface IBaseInfo {
+	lineCode?: string
+	lineName?: string
 }

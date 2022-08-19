@@ -1,25 +1,18 @@
-// EqpInfo 基础信息维护
-import { IPagination, IBaseEntity, IReq } from '@/entity/common'
+// 设备 基础信息维护
+import { IBaseEntity, IPageTable } from '@/entity/common'
 
-// 分页查询
-export interface IEqpInfoQuery extends IPagination {
-	data: {
-		eqpCode: string
-	}
-}
-//查询 IReq为分页参数
-export interface IEqpInfoReq extends IReq {
-	eqpCode: string
-}
+//查询条件
+export interface ISearchReq extends ISearchInfo, IPageTable {}
 
-// 新增、修改
-export interface IEqpInfoSubmitInfo extends IBaseEntity {
-	eqpCode: string
-	eqpName: string
-	location: string
-	qty: number
-}
-// 删除
-export type DeleteEqpInfo = {
-	id: string
+//查询参数
+export interface ISearchInfo extends IBaseInfo {}
+
+// 新增、修改、删除
+export interface ISubmitInfo extends IBaseInfo, IBaseEntity {}
+
+export interface IBaseInfo {
+	eqpCode?: string
+	eqpName?: string
+	location?: string
+	qty?: number
 }
