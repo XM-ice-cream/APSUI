@@ -1,22 +1,22 @@
 // 表格列
 export const Column = [
 	{
-		key: 'processName',
-		title: '制程段名称',
+		key: 'combinationName',
+		title: '组合制程名称',
 		minWidth: '100',
 		align: 'center',
 		tooltip: true,
 	},
 	{
-		key: 'processCode',
-		title: '制程段Code',
+		key: 'processId',
+		title: '制程段ID ',
 		minWidth: '100',
 		align: 'center',
 		tooltip: true,
 	},
 	{
-		key: 'region',
-		title: '段别',
+		key: 'lindId',
+		title: '线别',
 		minWidth: '100',
 		align: 'center',
 		tooltip: true,
@@ -40,8 +40,8 @@ export const Column = [
 // 查询参数
 export const SearchForm = [
 	{
-		label: '制程段code',
-		prop: 'processCode',
+		label: '组合制程名称',
+		prop: 'combinationName',
 		type: 'input',
 		labelWidth: '120px',
 	},
@@ -49,18 +49,18 @@ export const SearchForm = [
 // 新增、删除参数
 export const UpdateForm = [
 	{
-		label: '制程段名称',
-		prop: 'processName',
+		label: '组合制程名称',
+		prop: 'combinationName',
 		type: 'input',
 	},
 	{
-		label: '制程段Code',
-		prop: 'processCode',
+		label: '制程段ID',
+		prop: 'processId',
 		type: 'input',
 	},
 	{
-		label: '段别',
-		prop: 'region',
+		label: '线别',
+		prop: 'lindId',
 		type: 'input',
 	},
 ]

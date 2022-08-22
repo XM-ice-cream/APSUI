@@ -28,6 +28,7 @@ export interface IFormBase {
 	label: string
 	prop: string
 	type: string
+	labelWidth?: string
 }
 //请求参数
 export interface IPageTable {

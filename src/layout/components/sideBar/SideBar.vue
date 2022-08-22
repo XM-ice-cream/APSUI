@@ -54,7 +54,8 @@ const changeCollapse = () => {
                 <el-menu-item index="/maintenance/model">机种</el-menu-item>
                 <el-menu-item index="/maintenance/plant">厂区</el-menu-item>
                 <el-menu-item index="/maintenance/process">制程段</el-menu-item>
-                 <el-menu-item index="/maintenance/process-detail">制程段明细</el-menu-item>
+                <el-menu-item index="/maintenance/process-detail">制程段明细</el-menu-item>
+                <el-menu-item index="/maintenance/process-line">组合制程</el-menu-item>
             </el-menu-item-group>
       </el-sub-menu>
       <!-- <div v-for="(item, index) of store.userRouters" :key="index">

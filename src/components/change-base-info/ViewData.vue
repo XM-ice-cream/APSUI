@@ -90,7 +90,7 @@
   <div class="base-info-box">
       <el-form  class="form-inline" label-width="85px" ref="reqRef" :inline="true" :model="req" @keyup.native.enter="pageLoad" @submit.native.prevent>
        <template v-for="(item,key) in SearchForm">
-        <el-form-item :label="item.label" :prop="item.prop" >
+        <el-form-item :label="item.label" :prop="item.prop" :label-width="item?.labelWidth">
             <el-input v-if="item.type==='input'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`"  clearable />
             <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" clearable />
             <el-date-picker v-if="item.type==='datePicker'"   v-model="req[item.prop]" type="datetime"   format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${item.label}`" clearable />

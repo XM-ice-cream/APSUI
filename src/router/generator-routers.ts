@@ -89,6 +89,14 @@ const Routes = [
 						/* chunkName: ProcessDatail */ '@/views/maintenance/process-detail/ProcessDetail.vue'
 					),
 			},
+			{
+				path: '/maintenance/process-line',
+				name: 'ProcessLine',
+				component: () =>
+					import(
+						/* chunkName: ProcessLine */ '@/views/maintenance/process-line/ProcessLine.vue'
+					),
+			},
 		],
 	},
 ]
