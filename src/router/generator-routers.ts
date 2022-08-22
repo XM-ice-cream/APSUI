@@ -78,7 +78,15 @@ const Routes = [
 				name: 'Process',
 				component: () =>
 					import(
-						/* chunkName: Plant */ '@/views/maintenance/process/Process.vue'
+						/* chunkName: Process */ '@/views/maintenance/process/Process.vue'
+					),
+			},
+			{
+				path: '/maintenance/process-detail',
+				name: 'ProcessDetail',
+				component: () =>
+					import(
+						/* chunkName: ProcessDatail */ '@/views/maintenance/process-detail/ProcessDetail.vue'
 					),
 			},
 		],
