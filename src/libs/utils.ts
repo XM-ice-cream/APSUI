@@ -131,3 +131,39 @@ export function dateFormat(row: any, column: any) {
 	}
 	return moment(date).utc().format('YYYY-MM-DD HH:mm:ss')
 }
+/**
+ * @description 日期格式化
+ * @param {Date,String,Number} dateStr 日期
+ * @param {*} fmt 格式化样式 yyyy-MM-dd hh:mm:ss
+ */
+export const formatDate = (
+	dateStr: string | undefined,
+	fmt = 'yyyy-MM-dd hh:mm:ss'
+) => {
+	if (!dateStr) return ''
+	let date = new Date(dateStr)
+	let o: any = {
+		'y+': date.getFullYear(),
+		'M+': date.getMonth() + 1,
+		'd+': date.getDate(),
+		'h+': date.getHours(),
+		'm+': date.getMinutes(),
+		's+': date.getSeconds(),
+	}
+	for (let k in o) {
+		if (new RegExp(`(${k})`).test(fmt)) {
+			const str = o[k] + ''
+			fmt = fmt.replace(
+				RegExp.$1,
+				str.length > 1 ? str : padLeftZero(str)
+			)
+		}
+	}
+	return fmt
+}
+/**
+ * @description 字符串左边不足补0
+ * @param {String|Number} str 数字或者字符串类型的数字
+ * @param {Number} num 要保留的位数
+ */
+export const padLeftZero = (str = '', num = 2) => String(str).padStart(num, '0')

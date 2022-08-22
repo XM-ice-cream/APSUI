@@ -108,12 +108,12 @@ onMounted(() => {
 
 <template>
   <div class="base-info-box">
-    <!-- 查看 -->
+    <!-- 查看 Boolean(tableConfig.loading)-->
     <ViewData 
         ref="viewDataRef" 
         :Column="Column"
         :SearchForm="SearchForm" 
-        :loading = "tableConfig.loading"
+        :loading = "Boolean(tableConfig.loading)" 
         :req="req" 
         :tableData="tableData"        
         @pageLoad="pageLoad" 

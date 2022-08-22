@@ -39,7 +39,7 @@
 
     const reqRef = ref(null); 
 
-    const emit = defineEmits(["update:req","pageLoad","deleteClick","updateClick"]);
+    const emit = defineEmits(["update:req","pageLoad","deleteClick","updateClick","resetClick"]);
 
     // 查询
     const pageLoad = ()=>{
@@ -78,6 +78,7 @@
     //重置
     const resetClick = () => {
         (reqRef.value as any).resetFields();
+        emit("resetClick");
     }    
 
     onMounted(() => {        
@@ -87,16 +88,22 @@
 </script>
 <template>
   <div class="base-info-box">
-      <el-form  class="form-inline" label-width="100px" ref="reqRef" :inline="true" :model="req">
+      <el-form  class="form-inline" label-width="85px" ref="reqRef" :inline="true" :model="req" @keyup.native.enter="pageLoad" @submit.native.prevent>
        <template v-for="(item,key) in SearchForm">
-        <el-form-item :label="item.label" :prop="item.prop">
-            <el-input v-if="item.type==='input'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`"  />
-            <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" />
+        <el-form-item :label="item.label" :prop="item.prop" >
+            <el-input v-if="item.type==='input'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`"  clearable />
+            <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" clearable />
+            <el-date-picker v-if="item.type==='datePicker'"   v-model="req[item.prop]" type="datetime"   format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${item.label}`" clearable />
+            <el-radio-group v-if="item.type==='radioGroup'" v-model.trim="req[item.prop]" clearable >
+                <el-radio-button label="0" >否</el-radio-button>
+                <el-radio-button label="1" >是</el-radio-button>
+            </el-radio-group>
         </el-form-item>
        </template>
         <el-form-item>
-          <el-button type="primary" @click="pageLoad">搜索</el-button>
+          <el-button type="primary" @click="pageLoad">查询</el-button>
           <el-button class="reset" @click="resetClick()">重置</el-button>
+           <slot></slot>
         </el-form-item>
       </el-form>
     <Card>

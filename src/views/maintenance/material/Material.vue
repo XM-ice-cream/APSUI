@@ -1,22 +1,21 @@
-<!-- 设备基础信息维护 -->
-<script lang="ts" setup name="EqpInfo">
+<!-- 物料基础信息维护 -->
+<script lang="ts" setup name="Material">
 //vue 内置
 import { ElMessage } from "element-plus";
 import { Ref,ref,onMounted,inject } from "vue";
-
 // 参数
-import { Column,SearchForm,UpdateForm } from "./baseData";
-
+import { Column,SearchForm,UpdateForm,AdvancedForm } from "./baseData";
 // 自定义组件
 import ViewData from "@/components/change-base-info/ViewData.vue";
 import UpdateData from "@/components/change-base-info/UpdateData.vue";
-
+import AdvancedQuery from "@/components/advanced-query/AdvancedQuery.vue";
 //entity
-import { ISearchInfo ,ISubmitInfo,ISearchReq } from "@/entity/maintenance/eqpInfo";
+import { ISearchInfo ,ISubmitInfo,ISearchReq } from "@/entity/maintenance/material";
 import { IPagination,GlobalVariableType } from"@/entity/common";
-
 //api
-import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/eqpInfo";
+import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/material";
+//工具
+import { formatDate } from "@/libs/utils"
 
 
 //全局变量
@@ -24,33 +23,47 @@ const $config = inject<GlobalVariableType>("$config");
 const tableConfig = ref($config!.tableConfig);
 
 const updateDataRef = ref();
+const advancedQueryRef = ref();
 const dialogVisible = ref(false);
 const selectObj = ref({});//选中值
 const tableData = ref([]);//表格值
 const submitReq:Ref<ISubmitInfo> = ref({
-    eqpCode: "",//设备编码
-    eqpName: "",//设备名称
-    location:"",//位置
-    qty:0,//数量
-    id:"",
+    id: "",
+    po: "",
+    marstPartId: "",
+    modelId: "",
+    inStorageQty: 0,
+    workOrder: "",
+    storageDateTime: "",
+    marstPartY: "",
+    levelPart: "",
+    status: ""
 })
 const req: Ref<ISearchReq>  = ref({
-       eqpCode: "",
-        ...($config as GlobalVariableType).pageConfig
+    po: "",
+    modelId: "",
+    workOrder: "",
+    storageStartDateTime: "",
+    storageEndDateTime: "",
+    ...($config as GlobalVariableType).pageConfig
       
 })//表单参数
 
 
 // 查询
 const pageLoad = ()=>{
-    const { eqpCode,pageIndex,pageSize} = req.value;
+    const { po,modelId,workOrder,storageStartDateTime,storageEndDateTime,pageIndex,pageSize} = req.value;
     const obj:IPagination<ISearchInfo> = {
-            orderField:"eqpCode", // 排序字段
+            orderField:"po", // 排序字段
             ascending: true, // 是否升序
             pageSize, // 分页大小
             pageIndex, // 当前页码
             data: { 
-                eqpCode,
+                po,
+                modelId,
+                workOrder,
+                storageStartDateTime:formatDate(storageStartDateTime),
+                storageEndDateTime:formatDate(storageEndDateTime)
             },
     };
     tableConfig.value.loading=true;
@@ -65,8 +78,15 @@ const pageLoad = ()=>{
 }
 //新增、编辑
 const sumbitClick =(row :ISubmitInfo)=>{
-    const { id, eqpCode,eqpName,location,qty } = row;
-    const obj = {  id, eqpCode,eqpName,location,qty };
+    const { id,  po, marstPartId, modelId,inStorageQty,workOrder,storageDateTime,marstPartY,levelPart, status} = row;
+    const obj = {  id,
+                   po, 
+                   marstPartId,
+                   modelId,
+                   inStorageQty,
+                   workOrder,
+                   storageDateTime:formatDate(storageDateTime),
+                   marstPartY,levelPart, status };
     const requestApi = obj.id?updateReq:addReq;
     requestApi(obj).then(res=>{
         if(res.code==200){
@@ -78,7 +98,6 @@ const sumbitClick =(row :ISubmitInfo)=>{
         }
     })
 }
-
 //删除
 const  deleteClick=(row: ISubmitInfo)=> {  
     // 提供空字符串作为回退值：Undefined不能赋值给类型string  
@@ -91,11 +110,18 @@ const  deleteClick=(row: ISubmitInfo)=> {
         }
     })
 }
+//高级查询
+const advQuery = ()=>{
+  advancedQueryRef.value.pageLoad({ dialogVisible:true });
+}
 //弹框
 const  updateClick = (row: ISubmitInfo | {})=> {  
     dialogVisible.value= true;
     selectObj.value = {...row};
-    updateDataRef.value.pageLoad({dialogVisible:dialogVisible.value,submitReq:submitReq.value});
+    updateDataRef.value.pageLoad({ dialogVisible:dialogVisible.value,submitReq:submitReq.value });
+}
+const resetClick =()=>{
+    advancedQueryRef.value.resetClick();
 }
 
 onMounted(() => {        
@@ -116,7 +142,12 @@ onMounted(() => {
         @pageLoad="pageLoad" 
         @deleteClick="deleteClick" 
         @updateClick="updateClick"
-        />
+        @resetClick ="resetClick"
+        >
+        <el-button type="primary" class="advQuery" @click="advQuery">高级查询</el-button>
+    </ViewData>
+    <!-- 高级查询 -->
+    <AdvancedQuery ref="advancedQueryRef" v-model:req="req" :AdvancedForm="AdvancedForm"  @pageLoad="pageLoad"/>
      <!-- 新增、编辑 、删除-->
      <UpdateData ref="updateDataRef" :UpdateForm="UpdateForm" :selectObj = "selectObj" :dialogVisible="dialogVisible" :submitReq ="submitReq" @reLoad="sumbitClick"/>
   </div>

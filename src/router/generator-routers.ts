@@ -49,6 +49,38 @@ const Routes = [
 						/* chunkName: Line */ '@/views/maintenance/line/Line.vue'
 					),
 			},
+			{
+				path: '/maintenance/material',
+				name: 'Material',
+				component: () =>
+					import(
+						/* chunkName: Material */ '@/views/maintenance/material/Material.vue'
+					),
+			},
+			{
+				path: '/maintenance/model',
+				name: 'Model',
+				component: () =>
+					import(
+						/* chunkName: Material */ '@/views/maintenance/model/Model.vue'
+					),
+			},
+			{
+				path: '/maintenance/plant',
+				name: 'Plant',
+				component: () =>
+					import(
+						/* chunkName: Plant */ '@/views/maintenance/plant/Plant.vue'
+					),
+			},
+			{
+				path: '/maintenance/process',
+				name: 'Process',
+				component: () =>
+					import(
+						/* chunkName: Plant */ '@/views/maintenance/process/Process.vue'
+					),
+			},
 		],
 	},
 ]
