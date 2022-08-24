@@ -118,11 +118,10 @@
         }
 
         .Avatar {
-            width: 30px;
+            width: auto;
+            font-weight: 600;
             margin-left: 5px;
-
-            line-height: 25px;
-            cursor: pointer;
+            line-height: 100%;
         }
     }
 }

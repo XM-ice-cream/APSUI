@@ -5,10 +5,12 @@ import { useRouter } from "vue-router";
 import { VueDraggableNext } from "vue-draggable-next";
 import { computed } from "vue";
 import { useUserStore } from "@/libs/store/userStore";
+import { useLocalStorage } from '@/libs/hooks/useLocalStorage'
 import { fullScreenIcon, circleUrl } from "./base-data";
 
 const router = useRouter();
-const store = useUserStore();  
+const store = useUserStore(); 
+const { getLocalStorage } = useLocalStorage() 
 const current= computed (() => { 
    return router.currentRoute.value.path
 }) 
@@ -127,7 +129,7 @@ const toggleFullScreen = () => {
       </svg>
       <div class="Avatar">
         <el-dropdown @command="handleCommand">
-          <el-avatar :size="30" :src="circleUrl" />
+         <div>【{{getLocalStorage("name")}}】</div> 
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item command="a">退出登录</el-dropdown-item>

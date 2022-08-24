@@ -42,6 +42,7 @@ const useLoging = () => {
 			//获取用户信息
 			await getUserListApi().then((res: any) => {
 				if (res.code === 200) {
+                    setLocalStorage('name', res.result.name)
 					isLoging.value = false
 					ElMessage.success('登录成功')
 				}
