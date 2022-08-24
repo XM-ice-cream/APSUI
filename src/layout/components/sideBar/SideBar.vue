@@ -23,7 +23,7 @@ const changeCollapse = () => {
 <template>
   <div class="side-bar">
     <el-menu router :collapse="store.collapse" :default-active="current" active-text-color="#fff"
-      :background-color="`${store.dark ? '#1d1e1fbd' : '#7b41f2'}`" @select="selectMenu"
+      :background-color="`${store.dark ? '#1d1e1fbd' : 'transparent'}`" @select="selectMenu"
       :class="`el-menu-vertical-demo ${store.collapse && 'hideIcon'}`" style="height: 100vh" text-color="#ffffffa6">
       <div class="logo">
         <span class="menu-collapse" @click="changeCollapse">
@@ -35,12 +35,13 @@ const changeCollapse = () => {
         <!-- <el-avatar :size="35" :src="Logo" /> -->
         <span v-if="!store.collapse">&nbsp;APS</span>
       </div>
-      <el-menu-item index="/index/home">
-        <el-icon><HomeFilled /></el-icon>
-        <template #title>首页</template>
-      </el-menu-item>
+      <div class="menu-item">
+        <el-menu-item index="/index/home">
+            <el-icon><HomeFilled /></el-icon>
+            <template #title>首页</template>
+        </el-menu-item>
         <el-sub-menu index="/maintenance">
-             <template #title>
+            <template #title>
                 <el-icon>
                     <List />
                 </el-icon>
@@ -59,7 +60,9 @@ const changeCollapse = () => {
                 <el-menu-item index="/maintenance/storage">仓储</el-menu-item>
                 <el-menu-item index="/maintenance/work-day">工作日</el-menu-item>
             </el-menu-item-group>
-      </el-sub-menu>
+        </el-sub-menu>
+            </div>
+      
       <!-- <div v-for="(item, index) of store.userRouters" :key="index">
         <MenuItem :index="(index + 1).toString()" :collapse="store.collapse" :item="item" />
       </div> -->
@@ -74,12 +77,22 @@ const changeCollapse = () => {
   left: 0;
   width: 10px;
   color: #1d1e1fbd;
+  .menu-item{
+        max-height: calc(100% - 2.7rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+ 
 }
+
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
   border-radius: 0 0.4rem 0.4rem 0 !important;
+   background-image: url("@/assets/images/side-bg.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 .el-menu--collapse {
