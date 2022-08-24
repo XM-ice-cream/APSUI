@@ -2,7 +2,7 @@
 <!-- 高级查询 -->
 <script setup lang="ts" name="AdvancedQuery">
 //vue 内置
-import { ref,toRefs ,PropType} from "vue";
+import { ref,toRefs ,PropType ,nextTick} from "vue";
 //entity
 import { IFormBase } from "@/entity/common";
 
@@ -45,6 +45,7 @@ const closeClick=()=>{
 //重置
 const resetClick=()=>{
     (submitRef.value as any).resetFields();
+   
 }
 
 //父组件通过ref调用子组件(暴露给父组件值或方法)

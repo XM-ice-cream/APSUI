@@ -43,14 +43,12 @@ const useLoging = () => {
 			await getUserListApi().then((res: any) => {
 				if (res.code === 200) {
 					isLoging.value = false
-					ElMessage({
-						message: '登录成功',
-						type: 'success',
-					})
+					ElMessage.success('登录成功')
 				}
 			})
 		} catch (err: any) {
 			isLoging.value = false
+			ElMessage.error('网络错误')
 			throw new Error(err)
 		}
 	}

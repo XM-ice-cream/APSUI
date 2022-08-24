@@ -97,6 +97,21 @@ const Routes = [
 						/* chunkName: ProcessLine */ '@/views/maintenance/process-line/ProcessLine.vue'
 					),
 			},
+			{
+				path: '/maintenance/storage',
+				name: 'Storage',
+				component: () =>
+					import(
+						/* chunkName: Storage */ '@/views/maintenance/storage/Storage.vue'
+					),
+			},{
+				path: '/maintenance/work-day',
+				name: 'WorkDay',
+				component: () =>
+					import(
+						/* chunkName: WorkDay */ '@/views/maintenance/work-day/WorkDay.vue'
+					),
+			},
 		],
 	},
 ]

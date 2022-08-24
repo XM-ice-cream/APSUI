@@ -129,7 +129,7 @@ export function dateFormat(row: any, column: any) {
 	if (date === undefined) {
 		return ''
 	}
-	return moment(date).utc().format('YYYY-MM-DD HH:mm:ss')
+	return moment(date).utcOffset(8).format('YYYY-MM-DD HH:mm:ss')
 }
 /**
  * @description 日期格式化
