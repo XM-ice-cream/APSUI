@@ -35,7 +35,9 @@ export const Column = [
 		title: '状态',
 		minWidth: '100',
 		align: 'center',
-		tooltip: true,
+		tooltip: true, 
+        isTag:true,
+        type:['','danger']
 	},
 	{
 		key: 'createDate',
@@ -92,6 +94,7 @@ export const UpdateForm = [
 	{
 		label: '状态',
 		prop: 'status',
-		type: 'input',
+		type: 'radioGroup',
+       
 	}
 ]

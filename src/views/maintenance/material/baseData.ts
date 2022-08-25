@@ -49,6 +49,8 @@ export const Column = [
 		minWidth: '100',
 		align: 'center',
 		tooltip: true,
+        isTag:true,
+        type:['success','warning']
 	},
 	{
 		key: 'levelPart',
@@ -63,6 +65,8 @@ export const Column = [
 		minWidth: '100',
 		align: 'center',
 		tooltip: true,
+        isTag:true,
+        type:['','danger']
 	},
 	{
 		key: 'createDate',
@@ -156,6 +160,6 @@ export const UpdateForm = [
 	{
 		label: '状态',
 		prop: 'status',
-		type: 'input',
+		type: 'radioGroup',
 	},
 ]

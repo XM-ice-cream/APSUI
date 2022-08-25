@@ -31,7 +31,7 @@ const submitReq:Ref<ISubmitInfo> = ref({
     endDateTime: "",
     dayByHours: 0,
     weekByDay: 0,
-    status: ""
+    status: "Y"
 })
 const req: Ref<ISearchReq>  = ref({
    startDateTime: "",
@@ -61,6 +61,8 @@ const pageLoad = ()=>{
             tableData.value = data || [];
             req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
           
+        }else{
+             ElMessage.error(`${res.message}`);
         }
     }).finally(()=>{ tableConfig.value.loading = false; })
 }

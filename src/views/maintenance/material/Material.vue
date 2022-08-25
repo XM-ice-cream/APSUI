@@ -35,9 +35,9 @@ const submitReq:Ref<ISubmitInfo> = ref({
     inStorageQty: 0,
     workOrder: "",
     storageDateTime: "",
-    marstPartY: "",
+    marstPartY: "Y",
     levelPart: "",
-    status: ""
+    status: "Y"
 })
 const req: Ref<ISearchReq>  = ref({
     po: "",
@@ -73,6 +73,8 @@ const pageLoad = ()=>{
             tableData.value = data || [];
             req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
           
+        }else{
+             ElMessage.error(`${res.message}`);
         }
     }).finally(()=>{ tableConfig.value.loading = false; })
 }

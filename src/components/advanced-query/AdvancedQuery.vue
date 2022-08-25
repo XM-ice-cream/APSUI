@@ -45,7 +45,7 @@ const closeClick=()=>{
 //重置
 const resetClick=()=>{
     (submitRef.value as any).resetFields();
-   
+    emit("update:req",submitReq.value)   
 }
 
 //父组件通过ref调用子组件(暴露给父组件值或方法)
@@ -62,9 +62,9 @@ defineExpose({ pageLoad,resetClick })
                     <el-input v-if="item.type==='input'" v-model="submitReq[item.prop]" :placeholder= "`请输入${item.label}`" clearable />
                     <el-input-number v-if="item.type==='inputNumber'" v-model="submitReq[item.prop]" :placeholder="`请输入${item.label}`" clearable />
                     <el-date-picker v-if="item.type==='datePicker'"   v-model="submitReq[item.prop]" type="datetime"   format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${item.label}`" clearable />
-                    <el-radio-group v-if="item.type==='radioGroup'" v-model.trim="submitReq[item.prop]" clearable >
-                        <el-radio-button :label="0" >否</el-radio-button>
-                        <el-radio-button :label="1" >是</el-radio-button>
+                    <el-radio-group v-if="item.type==='radioGroup'" v-model.trim="submitReq[item.prop]" clearable size="small">
+                        <el-radio-button label="Y" >是</el-radio-button>
+                        <el-radio-button label="N" >否</el-radio-button>                        
                     </el-radio-group>
                 </el-form-item>
             </template>

@@ -115,7 +115,7 @@ export const UpdateForm = [
 	{
 		label: '状态',
 		prop: 'status',
-		type: 'input',
+		type: 'radioGroup',
 	},
 	{
 		label: '入库时间',

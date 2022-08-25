@@ -33,7 +33,7 @@ const submitReq:Ref<ISubmitInfo> = ref({
     modelId: "",
     inStorageQty: 0,
     workOrder: "",
-    status: "",
+    status: "Y",
     storageDateTime: ""
 })
 const req: Ref<ISearchReq>  = ref({
@@ -68,6 +68,8 @@ const pageLoad = ()=>{
             tableData.value = data || [];
             req.value = { ...req.value, pageSize, pageIndex, total, totalPage,elapsedMilliseconds:res.elapsedMilliseconds };
           
+        }else{
+             ElMessage.error(`${res.message}`);
         }
     }).finally(()=>{ tableConfig.value.loading = false; })
 }

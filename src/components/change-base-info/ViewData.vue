@@ -96,9 +96,9 @@
             <el-input v-if="item.type==='input'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`"  clearable />
             <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" clearable />
             <el-date-picker v-if="item.type==='datePicker'"   v-model="req[item.prop]" type="datetime"   format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${item.label}`" clearable />
-            <el-radio-group v-if="item.type==='radioGroup'" v-model.trim="req[item.prop]" clearable >
-                <el-radio-button label="0" >否</el-radio-button>
-                <el-radio-button label="1" >是</el-radio-button>
+            <el-radio-group v-if="item.type==='radioGroup'" v-model.trim="req[item.prop]" clearable size="small">
+                 <el-radio-button label="Y" >是</el-radio-button>
+                <el-radio-button label="N" >否</el-radio-button>               
             </el-radio-group>
         </el-form-item>
        </template>
@@ -122,8 +122,13 @@
           :width="item.width"
           :align="item?.align"
           :show-overflow-tooltip="item?.tooltip"
-          :formatter="(item.formatter&&item.formatter==='dateFormat')?dateFormat:null"  
-        />
+          :formatter="item?.formatter==='dateFormat'?dateFormat:null"  
+        >
+        <template #default="scope" v-if="item?.isTag">
+             <el-tag v-if="['Y'].includes(scope.row[item.key])" :type="item.type![0]">Y</el-tag>
+             <el-tag v-else :type="item.type![1]" >N</el-tag>
+        </template>
+        </el-table-column>
         <el-table-column label="操作" width="150" fixed="right">
           <template #default="scope">
             <el-button size="small" class="reset"  @click="updateClick(scope.row)">编辑</el-button>

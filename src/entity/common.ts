@@ -49,6 +49,8 @@ export interface ITableBase {
 	width?: string
 	minWidth?: string
 	formatter?: string
+    isTag?:Boolean
+    type?:Array<string>
 }
 
 //全局变量
