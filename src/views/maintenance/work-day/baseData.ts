@@ -94,7 +94,7 @@ export const UpdateForm = [
 	{
 		label: '状态',
 		prop: 'status',
-		type: 'radioGroup',
+		type: 'switch',
        
 	}
 ]

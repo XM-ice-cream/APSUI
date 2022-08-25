@@ -150,7 +150,7 @@ export const UpdateForm = [
 	{
 		label: '是否主料',
 		prop: 'marstPartY',
-		type: 'radioGroup',
+		type: 'switch',
 	},
 	{
 		label: '几级料号',
@@ -160,6 +160,6 @@ export const UpdateForm = [
 	{
 		label: '状态',
 		prop: 'status',
-		type: 'radioGroup',
+		type: 'switch',
 	},
 ]
