@@ -13,6 +13,7 @@ import { ISearchInfo ,ISubmitInfo,ISearchReq } from "@/entity/maintenance/proces
 import { IPagination,GlobalVariableType } from"@/entity/common";
 //api
 import { getPageListReq ,deteteReq ,addReq ,updateReq} from "@/apis/maintenance/processLine";
+import { getPageListReq  as getLineReq} from "@/apis/maintenance/line";
 
 
 
@@ -94,9 +95,30 @@ const  updateClick = (row: ISubmitInfo | {})=> {
     selectObj.value = {...row};
     updateDataRef.value.pageLoad({ dialogVisible:dialogVisible.value,submitReq:submitReq.value });
 }
+//获取线体[临时调用先写好的，后面需要后台重新写接口]
+const getLine = ()=>{
+    const obj:any = {
+            orderField:"lineCode", // 排序字段
+            ascending: true, // 是否升序
+            pageSize:19, // 分页大小
+            pageIndex:1, // 当前页码
+            data: { 
+                lineCode:"",
+            },
+    };
+  getLineReq(obj).then(res=>{
+        const result =  res.result.data.map((item:any)=>{ return {value:item.lineCode,label:item.lineName} });
+        UpdateForm.map(item=>{
+            if(item.prop=="lindId"){
+                item.selectList= result;
+            }
+        })
+  })
+}
 
 onMounted(() => {        
    pageLoad();
+   getLine();
 }) ;
 </script>
 

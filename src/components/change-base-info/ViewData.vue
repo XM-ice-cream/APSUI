@@ -97,7 +97,9 @@
             <el-input-number v-if="item.type==='inputNumber'" v-model="req[item.prop]" :placeholder="`请输入${item.label}`" clearable />
             <el-date-picker v-if="item.type==='datePicker'"   v-model="req[item.prop]" type="datetime"   format="YYYY-MM-DD HH:mm:ss" :placeholder="`请选择${item.label}`" clearable />
             <el-switch v-if="item.type==='switch'" v-model.trim="req[item.prop]"  active-value="Y"  inactive-value="N" size="small" />
-
+            <el-select v-if="item.type==='select'" v-model="req[item.prop]"  :placeholder="`请选择${item.label}`">
+                <el-option v-for="list in item.selectList" :key="list.value" :label="list.label" :value="list.value" />
+            </el-select>
         </el-form-item>
        </template>
         <el-form-item>

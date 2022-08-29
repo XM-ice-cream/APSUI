@@ -61,6 +61,11 @@ export const UpdateForm = [
 	{
 		label: '段别',
 		prop: 'region',
-		type: 'input',
+		type: 'select',
+        selectList:[
+                    {label:"SMT", value:"SMT"},
+                    {label:"BE", value:"BE"}, 
+                    {label:"Encap", value:"Encap"}
+                   ] 
 	},
 ]

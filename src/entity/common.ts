@@ -29,6 +29,7 @@ export interface IFormBase {
 	prop: string
 	type: string
 	labelWidth?: string
+    selectList?:Array<{value:string,label:string}>
 }
 //请求参数
 export interface IPageTable {

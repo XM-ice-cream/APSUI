@@ -61,6 +61,7 @@ export const UpdateForm = [
 	{
 		label: '线别',
 		prop: 'lindId',
-		type: 'input',
+		type: 'select',
+        selectList:[]
 	},
 ]
