@@ -23,7 +23,7 @@ const changeCollapse = () => {
 <template>
   <div class="side-bar">
     <el-menu router :collapse="store.collapse" :default-active="current" active-text-color="#fff"
-      :background-color="`${store.dark ? '#1d1e1fbd' : 'transparent'}`" @select="selectMenu"
+      :background-color="`${store.dark ? '#1d1e1fbd' : '#7c40f1'}`" @select="selectMenu"
       :class="`el-menu-vertical-demo ${store.collapse && 'hideIcon'}`" style="height: 100vh" text-color="#ffffffa6">
       <div class="logo">
         <span class="menu-collapse" @click="changeCollapse">
@@ -45,7 +45,7 @@ const changeCollapse = () => {
                 <el-icon>
                     <List />
                 </el-icon>
-                <span>维护中心</span>
+                <span v-show="!store.collapse">维护中心</span>
             </template>
             <el-menu-item-group>
                 <el-menu-item index="/maintenance/base-info">基础信息</el-menu-item>
@@ -90,7 +90,7 @@ const changeCollapse = () => {
   width: 200px;
   min-height: 400px;
   border-radius: 0 0.4rem 0.4rem 0 !important;
-   background-image: url("@/assets/images/side-bg.png");
+  background-image: url("@/assets/images/side-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -98,6 +98,7 @@ const changeCollapse = () => {
 .el-menu--collapse {
   width: 60px;
   overflow: hidden;
+  background-color: #7c40f1;
 }
 
 .hideIcon:deep(.el-sub-menu .el-sub-menu__icon-arrow) {

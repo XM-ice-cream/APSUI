@@ -63,6 +63,12 @@ const getItemMenuStyle = () => {
     margin: 0 auto;
     border-radius: 0.4rem;
 }
+.el-sub-menu.is-active{
+ background-color: #6730db !important;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 0.4rem;
+}
 
 :deep(.el-menu--inline) {
   background-color: #000c17;
