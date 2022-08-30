@@ -54,3 +54,9 @@ a{
     border-radius: 5px;
     background-color: #9466f0;
 }
+/* 改变input自动填充背景颜色 */
+input:-internal-autofill-previewed,
+input:-internal-autofill-selected {
+  -webkit-text-fill-color: #fff;
+  transition: background-color 1000s ease-out 0.5s;
+}
