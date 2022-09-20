@@ -1,6 +1,6 @@
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
   RouteRecordRaw,
 } from "vue-router";
 import routes from "./routers";
@@ -15,7 +15,7 @@ enum ELOGINSTATE {
 }
 
 const router = createRouter({
-  history: createWebHistory("/"),
+  history: createWebHashHistory("/"),
   routes,
 });
 

@@ -38,7 +38,7 @@ export default defineConfig({
     // }
   },
   build: {
-    outDir: "admin",
+    outDir: "dist",
     rollupOptions: {
       output: {
         assetFileNames: "[ext]/[name].[hash].[ext]",

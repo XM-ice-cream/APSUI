@@ -19,18 +19,18 @@ export const encryptDes = (message:string,key:string,iv:string)=>{
 /**
  * @description des解密
  */
-export const decryptDes = (message:unknown, key:string, iv:string) => {
-    let keyHex = cryptoJs.enc.Utf8.parse(key)
-    let ivHex = cryptoJs.enc.Utf8.parse(iv)
-    let decrypted = cryptoJs.DES.decrypt({ciphertext: cryptoJs.enc.Hex.parse(message)},
-        keyHex, {
-            iv: ivHex,
-            mode: cryptoJs.mode.CBC,
-            padding: cryptoJs.pad.Pkcs7
-        }
-    )
-    return decrypted.toString(cryptoJs.enc.Utf8)
-}
+// export const decryptDes = (message:unknown, key:string, iv:string) => {
+//     let keyHex = cryptoJs.enc.Utf8.parse(key)
+//     let ivHex = cryptoJs.enc.Utf8.parse(iv)
+//     let decrypted = cryptoJs.DES.decrypt({ciphertext: cryptoJs.enc.Hex.parse(message)},
+//         keyHex, {
+//             iv: ivHex,
+//             mode: cryptoJs.mode.CBC,
+//             padding: cryptoJs.pad.Pkcs7
+//         }
+//     )
+//     return decrypted.toString(cryptoJs.enc.Utf8)
+// }
 
 //十六进制字符串转为base64
 export const sha1_to_base64 = (sha1:string) => {

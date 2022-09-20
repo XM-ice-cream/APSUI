@@ -8,7 +8,6 @@ declare module '@vue/runtime-core' {
     AdvancedQuery: typeof import('./src/components/advanced-query/AdvancedQuery.vue')['default']
     Card: typeof import('./src/components/card/Card.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
-    ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElContainer: typeof import('element-plus/es')['ElContainer']
@@ -29,8 +28,6 @@ declare module '@vue/runtime-core' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
-    ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
-    ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
@@ -45,7 +42,6 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UpdateData: typeof import('./src/components/change-base-info/UpdateData.vue')['default']
-    'UpdateData copy': typeof import('./src/components/change-base-info/UpdateData copy.vue')['default']
     ViewData: typeof import('./src/components/change-base-info/ViewData.vue')['default']
   }
 }

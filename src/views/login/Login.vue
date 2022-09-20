@@ -5,18 +5,7 @@ import { rules } from "./baseData";
 import { userLoginApi ,getUserListApi} from "@/apis/user";
 import {IUserLoginReq, IUserLoginRes,IGetUserListItem} from "@/entity/user"
 import useLoging from "@/libs/hooks/useLoging";
-//两个非常常用的响应式 API：reactive 和 ref
 
-/*  ref:
-* ref 用于创建基础类型的响应式，也可以创建引用类型的响应式
-接受一个内部值并返回一个响应式且可变的 ref 对象。ref 对象仅有一个 .value property，指向该内部值
-        const data = ref(xxx) 
-引用方式： const dataValue = data.value
-*/
-
-/**reactive:
- * 返回对象的响应式副本，响应式转换是“深层”的——它影响所有嵌套 property
- */
 const ruleFormRef = ref(); //ref 约等于 reactive({ value: x })
 const passwordRef = ref();
 const router = useRouter();
@@ -86,7 +75,10 @@ const showPwd =()=> {
                 type="primary"
                 :loading="isLoging"
                 @click="submitForm"
-                >登 录</el-button
+                >
+                登 录
+                <el-icon><Right /></el-icon>
+                </el-button
             >
             </el-form-item>
       </el-form>
@@ -110,61 +102,5 @@ const showPwd =()=> {
 </style>
 
 <style lang="scss" scoped>
-
-.title {
-   text-align: left;
-    color: #fff;
-    font-size: 0.24rem;
-}
-.subtitle{
-    margin-top: 0.2rem;
-    color: #f99d26;
-    .subtitle-aps{
-      font-size: 0.16rem;
-      font-style: italic; 
-      padding: 0 0.05rem;       
-    }
-}
-.login-ruleForm{
-    margin-top:0.5rem;
-}
-.box-card {
-     width: 5.5rem;
-    height: 6rem;
-    padding: 0px 0.3rem 0.3rem 0.3rem;
-    position: absolute;
-    top: 15%;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    border: none;
-    background:#521a9f;
-    background-image: url("@/assets/images/login.png") !important;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 100% 100%;
-}
-.login-content {
-  width: 100%;
-  height: 100%;
-  background-color: #59289b !important;
-  background-image: url("@/assets/images/login-bg.jpg") !important;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  background-size: 100% 100%;
-}
-.login-btn{
-        width: 100%;
-    height: 0.5rem;
-    font-size: 0.14rem;
-    margin-top: 0.5rem;
-    border-radius: 0.4rem;
-    border: none;
-    // background: #7a41f2;
-    background: linear-gradient(90deg,#eda473,#a514fb);
-}
-:deep(.el-input__inner){
-    color:#fff;
-}
+@import "../../assets/css/login.less"
 </style>
