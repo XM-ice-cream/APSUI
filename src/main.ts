@@ -4,12 +4,16 @@ import store from '@/libs/store'
 import router from '@/router/index'
 import config from '@/libs/config'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
 import 'element-plus/theme-chalk/el-loading.css'
 import 'element-plus/theme-chalk/el-message-box.css'
 import 'element-plus/theme-chalk/el-message.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
+
 import '@/assets/css/index.css'
 import '@/assets/css/rewrite-element-plus.scss'
+
+import 'animate.css/animate.min.css' //引入动画
 
 // 创建vue实例
 const app = createApp(App)

@@ -2,15 +2,12 @@
   <router-view></router-view>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script lang="ts" setup name="app">
 document.documentElement.style.fontSize = 50 * document.documentElement.clientWidth / 960 + 'px';
 window.onresize = function () {
   document.documentElement.style.fontSize = 50 * document.documentElement.clientWidth / 960 + 'px'
 }
-export default defineComponent({
-  name: "App",
-});
+
 </script>
 
 
