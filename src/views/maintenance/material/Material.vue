@@ -1,7 +1,7 @@
 <!-- 物料基础信息维护 -->
 <script lang="ts" setup name="Material">
 //vue 内置
-import { ElMessage } from "element-plus";
+import { ElMessage,ElMessageBox } from "element-plus";
 import { Ref,ref,onMounted,inject } from "vue";
 // 参数
 import { Column,SearchForm,UpdateForm,AdvancedForm } from "./baseData";
@@ -102,14 +102,24 @@ const sumbitClick =(row :ISubmitInfo)=>{
 }
 //删除
 const  deleteClick=(row: ISubmitInfo)=> {  
-    // 提供空字符串作为回退值：Undefined不能赋值给类型string  
-    deteteReq({id:row?.id??''}).then(res=>{
-        if(res.code===200){
-            ElMessage.success("删除成功");
-            pageLoad();
-        }else{
-            ElMessage.error(`删除失败,${res.message}`);
+    ElMessageBox.confirm(
+        '是否确认删除该笔数据',
+        'Warning',
+        {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning',
         }
+    ).then(() => {
+        // 提供空字符串作为回退值：Undefined不能赋值给类型string  
+        deteteReq({id:row?.id??''}).then(res=>{
+            if(res.code===200){
+                ElMessage.success("删除成功");
+                pageLoad();
+            }else{
+                ElMessage.error(`删除失败,${res.message}`);
+            }
+        })
     })
 }
 

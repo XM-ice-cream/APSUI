@@ -104,7 +104,8 @@ const Routes = [
 					import(
 						/* chunkName: Storage */ '@/views/maintenance/storage/Storage.vue'
 					),
-			},{
+			},
+			{
 				path: '/maintenance/work-day',
 				name: 'WorkDay',
 				component: () =>

@@ -11,9 +11,12 @@
     --el-menu-bg-color: transparent;
     --el-color-danger: #fd9162;
 }
-.el-date-editor.el-input, .el-date-editor.el-input__inner {
+
+.el-date-editor.el-input,
+.el-date-editor.el-input__inner {
     width: 100% !important;
 }
+
 .el-message {
     --el-message-min-width: 3rem;
 }
@@ -30,12 +33,45 @@
     height: 40px;
     line-height: 40px;
 }
+
 .el-input__wrapper {
     width: 95%;
 }
-.el-select {    
+
+.el-select {
     width: 100%;
 }
+
+// 菜单
+.el-menu {
+    --el-menu-item-height: 40px;
+    background-color: transparent;
+}
+
+.el-menu-item-group>ul {
+    padding: 0 0 0 0.2rem;
+}
+
+.is-active .el-sub-menu__title {
+    background: #6030db !important;
+}
+
+.el-menu-item {
+    margin-bottom: 0.05rem;
+    min-width: auto !important;
+}
+
+.el-menu-item:hover,
+.el-menu-item.is-active {
+    background-color: #6730db !important;
+    color: #fff !important;
+    border-radius: 0.4rem 0 0 0.4rem;
+}
+
+.el-sub-menu .el-menu-item {
+    padding: 0 0 0 45px;
+}
+
 
 
 .reset {

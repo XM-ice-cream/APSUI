@@ -57,12 +57,6 @@ const getItemMenuStyle = () => {
 
 
 <style lang="scss" scoped>
-.el-menu-item.is-active {
-    background-color: #6730db !important;
-    width: 90%;
-    margin: 0 auto;
-    border-radius: 0.4rem;
-}
 .el-sub-menu.is-active{
  background-color: #6730db !important;
     width: 90%;
@@ -74,7 +68,5 @@ const getItemMenuStyle = () => {
   background-color: #000c17;
 }
 
-:deep(.el-menu-item:hover) {
-  color: #fff !important;
-}
+
 </style>

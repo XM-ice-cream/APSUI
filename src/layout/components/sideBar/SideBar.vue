@@ -137,19 +137,6 @@ const changeCollapse = () => {
   padding: 10px 0 5px 10px;
 }
 
-.el-menu-item.is-active {  
-    width: 97%;
-    margin: 0 auto;
-    background-color: #6730db !important;
-    border-radius: 0.4rem;
-}
-:deep(.el-menu-item:hover) {
-    width: 97%;
-    margin: 0 auto;
-    background-color: #6730db !important;
-    border-radius: 0.4rem;
-}
-:deep(.el-menu){
-    --el-menu-item-height: 40px;
-}
+
+
 </style>
