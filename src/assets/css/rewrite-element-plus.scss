@@ -1,6 +1,7 @@
 @import "element-plus/theme-chalk/src/index";
 
-:root {
+:root,
+html.dark {
     --el-color-primary: #7c40f1;
     --el-color-primary-light-3: #9469e9;
     --el-color-primary-light-7: #9469e9;

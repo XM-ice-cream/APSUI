@@ -24,7 +24,7 @@ const changeCollapse = () => {
   <div class="side-bar">
     <el-menu router :collapse="store.collapse" :default-active="current" active-text-color="#fff"
       :background-color="`${store.dark ? '#1d1e1fbd' : '#7c40f1'}`" @select="selectMenu"
-      :class="`el-menu-vertical-demo ${store.collapse && 'hideIcon'}`" style="height: 100vh" text-color="#ffffffa6">
+      :class="`el-menu-vertical-demo ${store.collapse && 'hideIcon'} ${store.dark ? 'menu-dark' : 'menu-light'}`" style="height: 100vh" text-color="#ffffffa6">
       <div class="logo">
         <span class="menu-collapse" @click="changeCollapse">
         <el-icon>
@@ -90,7 +90,14 @@ const changeCollapse = () => {
   width: 200px;
   min-height: 400px;
   border-radius: 0 0.4rem 0.4rem 0 !important;
-  background-image: url("@/assets/images/side-bg.png");
+}
+
+.menu-dark{
+    border: 1px solid #6030db;
+    border-left: none;
+}
+.menu-light{
+    background-image: url("@/assets/images/side-bg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
