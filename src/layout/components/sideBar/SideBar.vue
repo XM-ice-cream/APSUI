@@ -105,7 +105,7 @@ const changeCollapse = () => {
 .el-menu--collapse {
   width: 60px;
   overflow: hidden;
-  background-color: #7c40f1;
+  
 }
 
 .hideIcon:deep(.el-sub-menu .el-sub-menu__icon-arrow) {
