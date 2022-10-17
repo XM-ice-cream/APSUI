@@ -68,7 +68,7 @@ const showPwd = () => {
 
 <style>
 #login-content .el-input--large .el-input__wrapper {
-	padding: 0.09rem 0.2rem;
+	padding: 0.07rem 0.2rem;
 	border-radius: 0.4rem;
 	background: transparent;
 }
