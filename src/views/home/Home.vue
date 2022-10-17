@@ -1,14 +1,9 @@
-<template>
-  <div>
-    是首页啊
-  </div>
-</template>
+<template>是首页啊</template>
 
 <script setup lang="ts" name="home">
-import { onMounted } from "vue";
+import { onMounted } from "vue"
 
-onMounted(() => {        
-});
+onMounted(() => {})
 </script>
 
 <style></style>
